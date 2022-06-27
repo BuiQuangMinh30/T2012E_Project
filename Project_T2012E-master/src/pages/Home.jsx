@@ -91,7 +91,7 @@ const Home = () => {
                         gap={20}
                     >
                         {
-                            productData.getProducts(8).map((item, index) => (
+                            productData.getProducts(4).map((item, index) => (
                                 <ProductCard
                                     key={index}
                                     img01={item.image01}
@@ -130,7 +130,7 @@ const Home = () => {
                         gap={20}
                     >
                         {
-                            productData.getProducts(12).map((item, index) => (
+                            productData.getProducts(4).map((item, index) => (
                                 <ProductCard
                                     key={index}
                                     img01={item.image01}

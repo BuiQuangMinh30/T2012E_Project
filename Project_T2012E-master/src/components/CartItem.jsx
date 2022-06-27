@@ -7,7 +7,9 @@ import { updateItem, removeItem } from '../redux/shopping-cart/cartItemsSlide'
 import numberWithCommas from '../utils/numberWithCommas'
 import { Link } from 'react-router-dom'
 
+// order component
 const CartItem = props => {
+    console.log('CartItem', props)
 
     const dispatch = useDispatch()
 

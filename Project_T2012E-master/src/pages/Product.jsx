@@ -7,6 +7,9 @@ import ProductCard from '../components/ProductCard'
 import ProductView from '../components/ProductView'
 
 import productData from '../assets/fake-data/products'
+import ReviewProduct from '../components/ReviewProduct'
+import ListReview from '../components/ListReview'
+import ListComment from '../components/ListComment'
 
 const Product = props => {
 
@@ -23,6 +26,16 @@ const Product = props => {
             <Section>
                 <SectionBody>
                     <ProductView product={product}/>
+                </SectionBody>
+            </Section>
+            <Section>
+            <SectionTitle>
+                    Review Product
+                </SectionTitle>
+                <SectionBody>
+                    {/* <ReviewProduct/>
+                    <ListComment/> */}
+                    <ListReview/>
                 </SectionBody>
             </Section>
             <Section>

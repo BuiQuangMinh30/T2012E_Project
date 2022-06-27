@@ -11,7 +11,9 @@ import {
   Button,
 } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FaRoute,FaPhoneAlt,FaEnvelope,FaGlobe } from 'react-icons/fa';
+
 
 const Contact = () => {
   const key = "AIzaSyCrReRUR5r_GZEUuqFm2iSCgR0KaEk4FwI";
@@ -39,7 +41,7 @@ const Contact = () => {
                       <Row>
                         <Col sm={6}>
                           <Form.Group
-                            className="mb-3"
+                            className="mb-3 mr-3"
                             controlId="formBasicEmail"
                           >
                             <Form.Label>Full Name</Form.Label>
@@ -69,21 +71,10 @@ const Contact = () => {
                           </Form.Group>
                         </Col>
                         <Col sm={12}>
-                          <div className="form-group">
-                            <label className="label" for="#">
-                              Message
-                            </label>
-                            <textarea
-                              name="message"
-                              className="form-control"
-                              id="message"
-                              cols="30"
-                              rows="4"
-                              placeholder="Message"
-                            ></textarea>
-                          </div>
+                          <Form.Label>Example textarea</Form.Label>
+                          <Form.Control as="textarea" rows={2} placeholder="Contact"/>
                         </Col>
-                        <Col sm={12}>
+                        <Col sm={12} className="mt-3">
                           <Button variant="primary" type="submit">
                             Submit
                           </Button>
@@ -109,14 +100,14 @@ const Contact = () => {
                     />
                   </Col>
                 </Row>
-                <Row>
+                <Row className="mt-4">
                   <Col sm={3}>
                     <div className="dbox w-100 text-center">
-                      <div className="icon d-flex align-items-center justify-content-center">
-                        <FontAwesomeIcon icon="coffee" />
-                      </div>
+                      <div className="icon d-flex align-items-center justify-content-center"></div>
+                     
                       <div className="text">
                         <p>
+                        <FaRoute style={{marginRight: '5px'}}/>
                           <span>Address:</span> 198 West 21th Street, Suite 721
                           New York NY 10016
                         </p>
@@ -130,6 +121,7 @@ const Contact = () => {
                       </div>
                       <div className="text">
                         <p>
+                          <FaPhoneAlt style={{marginRight: '5px'}}/>
                           <span>Phone:</span>{" "}
                           <a href="tel://1234567920">+ 1235 2355 98</a>
                         </p>
@@ -143,6 +135,7 @@ const Contact = () => {
                       </div>
                       <div className="text">
                         <p>
+                          <FaEnvelope style={{marginRight: '5px'}}/>
                           <span>Email:</span>{" "}
                           <a href="mailto:info@yoursite.com">
                             info@yoursite.com
@@ -158,6 +151,7 @@ const Contact = () => {
                       </div>
                       <div className="text">
                         <p>
+                          <FaGlobe style={{marginRight: '5px'}}/>
                           <span>Website</span> <a href="#">yoursite.com</a>
                         </p>
                       </div>

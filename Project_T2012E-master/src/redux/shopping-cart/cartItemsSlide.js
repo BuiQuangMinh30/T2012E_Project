@@ -11,6 +11,7 @@ export const cartItemsSlice = createSlice({
     initialState,
     reducers: {
         addItem: (state, action) => {
+            
             const newItem = action.payload
             const duplicate = state.value.filter(e => e.slug === newItem.slug && e.color === newItem.color && e.size === newItem.size)
             if (duplicate.length > 0) {

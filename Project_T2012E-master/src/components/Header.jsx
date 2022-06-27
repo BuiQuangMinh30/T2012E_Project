@@ -1,54 +1,44 @@
 import React, { useRef, useEffect } from 'react'
 import { Link, useLocation,NavLink } from 'react-router-dom'
-import LoginIcon from '@mui/icons-material/Login';
-import { Icon } from '@iconify/react';
 
-import logo from '../assets/images/Logo-2.png'
+import logo from '../assets/images/logo.jpg'
+import { Icon } from '@iconify/react';
 
 const mainNav = [
     {
-        display: "Trang chủ",
+        display: "Home",
         path: "/"
     },
     {
-        display: "Sản phẩm",
+        display: "Product",
         path: "/catalog"
     },
     {
-        display: "Phụ kiện",
-        path: "/accessories"
+        display: "Blog",
+        path: "/blog"
     },
     {
-        display: "Liên hệ",
+        display: "About Us",
+        path: "/about"
+    },
+    {
+        display: "Contact",
         path: "/contact"
     }
 ]
 
-const Header = () => {
+const Header = (props) => {
+    // console.log('props', props);
 
     const { pathname } = useLocation()
     const activeNav = mainNav.findIndex(e => e.path === pathname)
 
     const headerRef = useRef(null)
-
-    useEffect(() => {
-        window.addEventListener("scroll", () => {
-            if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
-                headerRef.current.classList.add('shrink');
-            } else {
-                headerRef.current.classList.remove('shrink');
-            } 
-        })
-        return () => {
-            window.removeEventListener("scroll", null)
-        };
-    }, []);
-
     const menuLeft = useRef(null)
     const menuToggle = () => menuLeft.current.classList.toggle('active')
 
     return (
-        <div className="header" ref={headerRef}>
+        <div className="header shrink" ref={headerRef}>
             <div className="container">
                 <div className="header__logo">
                     <Link to="/">
@@ -94,7 +84,7 @@ const Header = () => {
                         </div>
                         <div className="header__menu__item header__menu__right__item">
                             <NavLink to="/login">
-                                <i class="fas fa-sign-in-alt">a</i>
+                                <i><Icon icon="clarity:logout-line" /></i>
                             </NavLink>
                         </div>
                     </div>

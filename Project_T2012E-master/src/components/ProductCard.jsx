@@ -11,6 +11,7 @@ import Button from './Button'
 
 import numberWithCommas from '../utils/numberWithCommas'
 
+// props home component
 const ProductCard = props => {
 
     const dispatch = useDispatch()

@@ -3,8 +3,12 @@
 @import "./base";
 
 @import "./pages/contact";
+@import "./pages/aboutus";
 @import "./pages/login";
+@import "./pages/about";
 @import "./pages/profile";
+@import "./pages/blog";
+
 
 @import "./components/header";
 @import "./components/footer";
@@ -18,4 +22,5 @@
 @import "./components/product";
 @import "./components/product-view-modal";
 @import "./components/cart";
+@import "./components/listreview";
 
