@@ -1,4 +1,5 @@
 import React, { useCallback, useState, useEffect, useRef } from 'react'
+import axios from "axios";
 
 import Helmet from '../components/Helmet'
 import CheckBox from '../components/CheckBox'
@@ -11,7 +12,20 @@ import Button from '../components/Button'
 import InfinityList from '../components/InfinityList'
 
 const Catalog = () => {
-
+    const [product, setProduct] = useState([]);
+    useEffect(()=>{
+         const fetchData = async () =>{
+              const data = await axios.get('https://elevatorsystemdashboard.azurewebsites.net/api/Elevators');
+              if(data.status == 200){
+                   setProduct(data.data);
+              }else{
+                   alert('loi')
+              }
+              
+         }
+         fetchData();
+    },[]);
+   
     const initFilter = {
         category: [],
         color: [],
@@ -169,7 +183,7 @@ const Catalog = () => {
                 </div>
                 <div className="catalog__content">
                     <InfinityList
-                        data={products}
+                        product={product}
                     />
                 </div>
             </div>

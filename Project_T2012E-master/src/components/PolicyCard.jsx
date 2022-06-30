@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 const PolicyCard = props => {
     return (
-        <div className="policy-card">
+        <div className="policy-card container">
             <div className="policy-card__icon">
                 <i className={props.icon}></i>
             </div>

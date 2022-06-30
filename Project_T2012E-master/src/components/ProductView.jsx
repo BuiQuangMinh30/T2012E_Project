@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import axios from "axios";
 
 import { withRouter } from "react-router";
 
@@ -16,13 +17,27 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import OrderInformation from "./OrderInformation";
 
 const ProductView = (props) => {
-  // console.log('props  ', props)
-//   const [lgShow, setLgShow] = useState(false);
+  const [products, setProduct] = useState([]);
+  useEffect(()=>{
+       const fetchData = async () =>{
+            const data = await axios.get(`https://elevatorsystemdashboard.azurewebsites.net/api/Elevators/${props.match.params.slug}`);
+            if(data.status == 200){
+                 setProduct(data.data);
+            }else{
+                 alert('loi')
+            }
+            
+       }
+       fetchData();
+  },[]);
+
+  
+  // console.log('props 123 ', props)
 
   const dispatch = useDispatch();
 
-  let product = props.product;
-  console.log('product 123', product)
+  let product = products;
+  console.log('Product',product)
 
   if (product === undefined)
     product = {
@@ -117,19 +132,19 @@ const ProductView = (props) => {
         <div className="product__images__list">
           <div
             className="product__images__list__item"
-            onClick={() => setPreviewImg(product.image01)}
+            // onClick={() => setPreviewImg(`https://elevatorsystemdashboard.azurewebsites.net${product.Thumbnails.split(',')[0]}`)}
           >
-            <img src={product.image01} alt="" />
+            {/* <img src={`https://elevatorsystemdashboard.azurewebsites.net${product.Thumbnails.split(',')[0]}`} alt="" /> */}
           </div>
           <div
             className="product__images__list__item"
-            onClick={() => setPreviewImg(product.image02)}
+            // onClick={() => setPreviewImg(`https://elevatorsystemdashboard.azurewebsites.net${product.Thumbnails.split(',')[1]}`)}
           >
-            <img src={product.image02} alt="" />
+            {/* <img src={`https://elevatorsystemdashboard.azurewebsites.net${product.Thumbnails.split(',')[1]}`} alt="" /> */}
           </div>
         </div>
         <div className="product__images__main">
-          <img src={previewImg} alt="" />
+          {/* <img src={`https://elevatorsystemdashboard.azurewebsites.net${product.Thumbnails.split(',')[2]}`} alt="" /> */}
         </div>
         <div
           className={`product-description ${descriptionExpand ? "expand" : ""}`}
@@ -137,7 +152,7 @@ const ProductView = (props) => {
           <div className="product-description__title">Chi tiết sản phẩm</div>
           <div
             className="product-description__content"
-            dangerouslySetInnerHTML={{ __html: product.description }}
+            dangerouslySetInnerHTML={{ __html: product.Description }}
           ></div>
           <div className="product-description__toggle">
             <Button
@@ -150,16 +165,17 @@ const ProductView = (props) => {
         </div>
       </div>
       <div className="product__info">
-        <h1 className="product__info__title">{product.title}</h1>
+        <h1 className="product__info__title">{product.Name}</h1>
         <div className="product__info__item">
           <span className="product__info__item__price">
-            {numberWithCommas(product.price)}
+            {/* {numberWithCommas(product.price)} */}
+            {product.Price} VNĐ
           </span>
         </div>
         <div className="product__info__item">
           <div className="product__info__item__title">Màu sắc</div>
           <div className="product__info__item__list">
-            {product.colors.map((item, index) => (
+            {/* {product.colors.map((item, index) => (
               <div
                 key={index}
                 className={`product__info__item__list__item ${
@@ -169,13 +185,13 @@ const ProductView = (props) => {
               >
                 <div className={`circle bg-${item}`}></div>
               </div>
-            ))}
+            ))} */}
           </div>
         </div>
         <div className="product__info__item">
           <div className="product__info__item__title">Kích cỡ</div>
           <div className="product__info__item__list">
-            {product.size.map((item, index) => (
+            {/* {product.size.map((item, index) => (
               <div
                 key={index}
                 className={`product__info__item__list__item ${
@@ -187,7 +203,7 @@ const ProductView = (props) => {
                   {item}
                 </span>
               </div>
-            ))}
+            ))} */}
           </div>
         </div>
         <div className="product__info__item">
@@ -226,7 +242,7 @@ const ProductView = (props) => {
         <div className="product-description__title">Chi tiết sản phẩm</div>
         <div
           className="product-description__content"
-          dangerouslySetInnerHTML={{ __html: product.description }}
+          dangerouslySetInnerHTML={{ __html: product.Description }}
         ></div>
         <div className="product-description__toggle">
           <Button

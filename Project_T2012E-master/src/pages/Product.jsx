@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
+
+import axios from 'axios'
 
 import Helmet from '../components/Helmet'
 import Section, {SectionBody, SectionTitle} from '../components/Section'
@@ -11,21 +13,20 @@ import ReviewProduct from '../components/ReviewProduct'
 import ListReview from '../components/ListReview'
 import ListComment from '../components/ListComment'
 
+
 const Product = props => {
+   
+    // // const relatedProducts = productData.getProducts(8)
 
-    const product = productData.getProductBySlug(props.match.params.slug)
-
-    const relatedProducts = productData.getProducts(8)
-
-    React.useEffect(() => {
-        window.scrollTo(0,0)
-    }, [product])
+    // React.useEffect(() => {
+    //     window.scrollTo(0,0)
+    // }, [products])
 
     return (
-        <Helmet title={product.title}>
+        <Helmet>
             <Section>
                 <SectionBody>
-                    <ProductView product={product}/>
+                    <ProductView/>
                 </SectionBody>
             </Section>
             <Section>
@@ -43,7 +44,7 @@ const Product = props => {
                     Khám phá thêm
                 </SectionTitle>
                 <SectionBody>
-                    <Grid
+                    {/* <Grid
                         col={4}
                         mdCol={2}
                         smCol={1}
@@ -61,7 +62,7 @@ const Product = props => {
                                 />   
                             ))
                         }
-                    </Grid>
+                    </Grid> */}
                 </SectionBody>
             </Section>
         </Helmet>

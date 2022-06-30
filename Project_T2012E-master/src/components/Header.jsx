@@ -82,9 +82,9 @@ const Header = (props) => {
                             </Link>
                             
                         </div>
-                        <div className="header__menu__item header__menu__right__item">
+                        <div className="header__menu__item header__menu__right__item"style={{marginTop:'-10px'}}>
                             <NavLink to="/login">
-                                <i><Icon icon="clarity:logout-line" /></i>
+                                <i ><Icon icon="clarity:logout-line" /></i>
                             </NavLink>
                         </div>
                     </div>

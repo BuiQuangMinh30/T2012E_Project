@@ -73,9 +73,9 @@ img {
 
 .container {
     width: 100%;
-    max-width: 1620px;
-    padding: 0 50px;
-    margin: auto;
+    // max-width: 1620px;
+    // padding: 0 50px;
+    // margin: auto;
 
     @include tablet {
         padding: 0 20px;

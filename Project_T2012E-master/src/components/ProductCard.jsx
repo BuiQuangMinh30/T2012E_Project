@@ -13,22 +13,35 @@ import numberWithCommas from '../utils/numberWithCommas'
 
 // props home component
 const ProductCard = props => {
+    console.log('props, props',props)
+
+    let image = '';
+    let counter = props.img.split(",").length - 1
+    console.log('counter'   , counter)
+    if(counter  == 0){
+        image = props.img
+    }
+        image = props.img.split(',')[0];
+
 
     const dispatch = useDispatch()
 
     return (
         <div className="product-card">
-            <Link to={`/catalog/${props.slug}`}>
+            {/* <h2>hello</h2> */}
+            {/* <Link to={`/catalog/${props.slug}`}> */}
+            <Link to={`/catalog/${props.ID}`}>
                 <div className="product-card__image">
-                    <img src={props.img01} alt="" />
-                    <img src={props.img02} alt="" />
+                    <img src={`https://elevatorsystemdashboard.azurewebsites.net${image}`} alt="" />
+                    {/* <img src={props.img02} alt="" /> */}
                 </div>
+                {/* <h3 className="product-card__name">{props.name}</h3> */}
                 <h3 className="product-card__name">{props.name}</h3>
                 <div className="product-card__price">
-                    {numberWithCommas(props.price)}
-                    <span className="product-card__price__old">
+                    {props.price} VNĐ
+                    {/* <span className="product-card__price__old">
                         <del>{numberWithCommas(399000)}</del>
-                    </span>
+                    </span> */}
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   </div>
             </Link>
             <div className="product-card__btn">
@@ -36,9 +49,9 @@ const ProductCard = props => {
                     size="sm"    
                     icon="bx bx-cart"
                     animate={true}
-                    onClick={() => dispatch(set(props.slug))}
+                    // onClick={() => dispatch(set(props.slug))}
                 >
-                    chọn mua
+                    Xem chi tiết
                 </Button>
             </div>
         </div>

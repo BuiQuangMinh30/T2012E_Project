@@ -1,24 +1,17 @@
 const size = [
     {
-        display: "S",
+        display: "Nhỏ",
         size: "s"
     },
     {
-        display: "M",
+        display: "Vừa",
         size: "m"
     },
     {
-        display: "L",
+        display: "Rộng",
         size: "l"
     },
-    {
-        display: "XL",
-        size: "xl"
-    },
-    {
-        display: "XXL",
-        size: "xxl"
-    },
+   
 ]
 
 export default size

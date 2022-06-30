@@ -14,8 +14,11 @@ import ProductViewModal from "./ProductViewModal";
 
 import Routes from "../routes/Routes";
 import Login from "../pages/Login";
-import Register from "../pages/Register";
 import axios from "axios";
+import HeroSlider from "./HeroSlider";
+
+import Images from '../assets/fake-data/images'
+import ScrollButton from "./ScrollButton";
 
 const Layout = () => {
   const api = `https://localhost:44399/api/Profile12`;
@@ -44,13 +47,12 @@ const Layout = () => {
         <Route path="/login">
             <Login/>
           </Route>
-          <Route path="/register">
-            <Register/>
-          </Route>
+         
          <Route
           render={(props) => (
             <div>
               <Header {...props} />
+             
               <div className="container">
                 <div className="main">
                   <Routes dataUser={dataUser}/>
@@ -58,6 +60,7 @@ const Layout = () => {
               </div>
               <Footer />
               <ProductViewModal />
+              <ScrollButton />
             </div>
           )}
         />

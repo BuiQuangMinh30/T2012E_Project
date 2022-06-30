@@ -1,10 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
+import axios from 'axios'
 
 import Grid from './Grid'
 import ProductCard from './ProductCard'
 
 const InfinityList = props => {
+   const {product} = props
+   console.log('propsssssss', product)
 
     const perLoad = 6 // items each load
 
@@ -17,9 +20,9 @@ const InfinityList = props => {
     const [index, setIndex] = useState(0)
 
     useEffect(() => {
-        setData(props.data.slice(0, perLoad))
+        setData(product.slice(0, perLoad))
         setIndex(1)
-    }, [props.data])
+    }, [product])
 
     useEffect(() => {
         window.addEventListener("scroll", () => {
@@ -35,20 +38,20 @@ const InfinityList = props => {
 
     useEffect(() => {
         const getItems = () => {
-            const pages = Math.floor(props.data.length / perLoad)
-            const maxIndex = props.data.length % perLoad === 0 ? pages : pages + 1
+            const pages = Math.floor(product.length / perLoad)
+            const maxIndex = product.length % perLoad === 0 ? pages : pages + 1
 
             if (load && index <= maxIndex) {
                 const start = perLoad * index
                 const end = start + perLoad
 
-                setData(data.concat(props.data.slice(start, end)))
+                setData(data.concat(product.slice(start, end)))
                 setIndex(index + 1)
             }
         }
         getItems()
         setLoad(false)
-    }, [load, index, data, props.data])
+    }, [load, index, data, product])
 
     return (
         <div ref={listRef}>
@@ -60,13 +63,15 @@ const InfinityList = props => {
             >
                 {
                     data.map((item, index) => (
+                        // console.log('item', item),
+                       
                         <ProductCard
-                            key={index}
-                            img01={item.image01}
-                            img02={item.image02}
-                            name={item.title}
-                            price={Number(item.price)}
-                            slug={item.slug}
+                            key={item.index}
+                            ID={item.ID}
+                            img={item.Thumbnails}
+                            name={item.Name}
+                            price={item.Price}
+                            slug={item.Slug}
                         />
                     ))
                 }
