@@ -3,30 +3,30 @@ import { useDispatch } from "react-redux";
 import { FaStar } from "react-icons/fa";
 import { createComment } from "../redux/comment-product/commentProductSlice";
 
+import { set } from "../redux/product-modal/productModalSlice";
+
+import axios from "axios";
+
 const colors = {
   orange: "#FFBA5A",
   grey: "#a9a9a9",
 };
 
-function ReviewProduct() {
+const ReviewProduct = (props) => {
+  // console.log('review product', props.dataReview.match.params.slug)
+  const ElevatorId = props.dataReview.match.params.slug;
+
   const [currentValue, setCurrentValue] = useState(0);
   const [hoverValue, setHoverValue] = useState(undefined);
-  const [comment, setComment] = useState("");
+  const [commentFeedback, setComment] = useState("");
+  const [profile, setProfile] = useState({});
+
+  const dateNow = new Date();
+
   const stars = Array(5).fill(0);
   const dispatch = useDispatch();
-  // useEffect(() => {
-  //   submitData()
-  // })
-  const submitData = () => {
-    const newPost = {
-      rate: currentValue,
-      comment: comment,
-    };
-    dispatch(createComment(newPost));
-    setComment("");
-    setHoverValue(undefined);
-    setCurrentValue(0);
-  };
+  const urlFeedback =
+    "https://elevatorsystemdashboard.azurewebsites.net/api/Feedbacks";
 
   const handleClick = (value) => {
     setCurrentValue(value);
@@ -40,28 +40,63 @@ function ReviewProduct() {
     setHoverValue(undefined);
   };
 
+  // console.log('comment', commentFeedback)
+  const infoComment = {
+    Description: commentFeedback,
+    SatisfyingLevel: currentValue,
+    ElevatorID: ElevatorId,
+    Problem: dateNow,
+    Improvement: "https://haycafe.vn/wp-content/uploads/2022/03/avatar-facebook-doc.jpg"
+  };
+  var getToken = JSON.parse(localStorage.getItem("dataUser"));
+  const getToken1 = getToken.access_token;
+  const submitData = async (e) => {
+    e.preventDefault();
+    axios
+      .post(urlFeedback, infoComment, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${getToken1}`,
+        },
+      })
+      .then((result) => {
+        console.log('result', result);
+        if (result.status == 200) {
+          setComment("");
+          setHoverValue(undefined);
+          setCurrentValue(0);
+          alert("Comment thành công");
+        }
+        else alert("Invalid User");
+      });
+    
+  };
+
   return (
     <>
-      <div className="col-lg-4 col-md-5 col-sm-4 offset-md-1 offset-sm-1 col-12 mt-4">
+      <div className="col-lg-4 col-md-6 col-sm-4col-12 mt-4">
+        <form>
           <div className="form-group">
             <h4>Leave a comment</h4>
             <label for="message">Message</label>
             <textarea
-            style={styles.textarea}
+              style={styles.textarea}
               name="msg"
               id=""
               msg
               cols="30"
               rows="5"
               // className="form-control"
-              value={comment}
+              value={commentFeedback}
               onChange={(e) => setComment(e.target.value)}
             ></textarea>
           </div>
 
           <div className="form-group">
-            <label for="message" style={{marginBottom: '10px'}}>Rate Star</label>
-            <br/>
+            <label for="message" style={{ marginBottom: "10px" }}>
+              Rate Star
+            </label>
+            <br />
             {/* <br></br> */}
             {stars.map((_, index) => {
               return (
@@ -87,19 +122,15 @@ function ReviewProduct() {
           </div>
 
           <div className="form-group">
-            <button
-              style={styles.button}
-              width={"50px"}
-              onClick={() => submitData()}
-            >
+            <button style={styles.button} width={"50px"} onClick={submitData}>
               SUBMIT
             </button>
           </div>
-       
+        </form>
       </div>
     </>
   );
-}
+};
 
 const styles = {
   container: {
@@ -118,7 +149,7 @@ const styles = {
     padding: 5,
     margin: "10px 0",
     minHeight: 100,
-    minWidth: '100%',
+    minWidth: "100%",
   },
   button: {
     marginTop: "10px",
@@ -126,8 +157,8 @@ const styles = {
     borderRadius: 5,
     width: 100,
     padding: 10,
-    backgroundColor: '#4267B2',
-    color: '#fff',
+    backgroundColor: "#4267B2",
+    color: "#fff",
     marginBottom: "10px",
   },
 };

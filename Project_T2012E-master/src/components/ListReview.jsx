@@ -5,17 +5,18 @@ import ReviewProduct from "./ReviewProduct";
 import { useEffect } from "react";
 import ListComment from "./ListComment";
 
-const ListReview = () => {
-  const post = useSelector((state) => state.commentProducts.values);
-  useEffect(()=>{
-    
-  },post)
+import { withRouter } from "react-router";
+
+const ListReview = (props) => {
+  // const post = useSelector((state) => state.commentProducts.values);
+  console.log('match',props)
   return (
     <>
       <section>
         <div className="container review-comment">
           <div className="row">
-            <ListComment post={post}/>
+            {/* <ListComment post={post}/> */}
+            <ListComment/>
             <ReviewProduct/>
           </div>
         </div>
@@ -24,4 +25,4 @@ const ListReview = () => {
   );
 };
 
-export default ListReview;
+export default withRouter(ListReview);

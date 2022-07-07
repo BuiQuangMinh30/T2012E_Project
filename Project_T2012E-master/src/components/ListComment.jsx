@@ -1,36 +1,53 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from "react-redux";
+
+import axios from 'axios';
 const ListComment = (props) => {
-     // const {post} = props;
+     const {commentProductId} = props;
+     const [comments, setComments] = useState([])
      
-  const post = useSelector((state) => state.commentProducts.values);
+     useEffect(()=>{
+      const fetchData = async () =>{
+           const data = await axios.get(`https://elevatorsystemdashboard.azurewebsites.net/api/GetFeedbackByElevatorID/${commentProductId}`);
+           if(data.status == 200){
+            // console.log('data', data)
+            setComments(data.data.datas);
+           }else{
+                alert('loi')
+           }
+           
+      }
+      fetchData();
+ },[]);
+ console.log('comments', comments)
   return (
     <>
      <div className="col-sm-5 col-md-6 col-12 pb-4">
-              <h4>{post.length - 1} Comments</h4>
-              {post.length <=1 ? 
+              <h4>{comments.length -1} Comments</h4>
+              {comments.length <= -1 ? 
               <>
-              <div>Không có comment nào</div>
+                <div>Không có comment nào</div>*
               </>
             :
             <>
-              {post.map((item, index) => {
+              {comments.map((item, index) => {
+                console.log('item', item)
                 if(index > 0 ){
                   return (
                     <div className="comment mt-4 text-justify float-left">
                     <img
-                      src="https://i.imgur.com/yTFUilP.jpg"
+                      src={item.Improvement}
                       alt=""
                       className="rounded-circle"
                       width="40"
                       height="40"
                     />
                     <h4>Minh Bùi</h4>
-                    <span> - 20 October, 2018</span>
+                    <span> - {item.Problem}</span>
                     <br />
-                    <span>{item.rate}</span>
+                    <span>{item.SatisfyingLevel}</span>
                     <p>
-                      {item.comment}
+                      {item.Description}
                     </p>
                   </div>
                   )

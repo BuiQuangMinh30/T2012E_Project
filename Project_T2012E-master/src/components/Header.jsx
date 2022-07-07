@@ -14,8 +14,8 @@ const mainNav = [
         path: "/catalog"
     },
     {
-        display: "Blog",
-        path: "/blog"
+        display: "Blogs",
+        path: "/blogs"
     },
     {
         display: "About Us",

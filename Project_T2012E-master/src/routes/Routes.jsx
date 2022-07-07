@@ -10,10 +10,10 @@ import Profile from "../pages/Profile";
 import Contact from "../pages/Contact";
 import About from "../pages/About";
 import Blog from "../pages/Blog";
-import Login from "../pages/Login";
 import DetailBlog from "../pages/DetailBlog";
 
-const Routes = () => {
+const Routes = (props) => {
+  // console.log('prop router', props)
   return (
     <>
       <Switch>
@@ -23,8 +23,11 @@ const Routes = () => {
         <Route path="/catalog" component={Catalog} />
         <Route path="/cart" component={Cart} />
         <Route path="/about" component={About} />
-        <Route path="/blog" component={Blog} />
-        <Route path="/profile" component={Profile} />
+        <Route path="/blogs" component={Blog} />
+        <Route path="/profile" 
+        // component={Profile}
+        component={props => <Profile {...props} isAuthed={true} />}
+        />
         <Route path="/contact" component={Contact} />
       </Switch>
     </>

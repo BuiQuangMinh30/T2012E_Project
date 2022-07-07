@@ -11,6 +11,8 @@ export const commentProductSlice = createSlice({
               {
                   rate: 0,
                   comment: '',
+                  username: '',
+                  dateTime: '',
               }
            ]
       },

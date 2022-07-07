@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { useSelector } from "react-redux";
 
 import axios from 'axios'
 
@@ -15,13 +16,9 @@ import ListComment from '../components/ListComment'
 
 
 const Product = props => {
-   
-    // // const relatedProducts = productData.getProducts(8)
-
-    // React.useEffect(() => {
-    //     window.scrollTo(0,0)
-    // }, [products])
-
+    // const post = useSelector((state) => state.commentProducts.values);
+    // console.log('props product', props)
+    const commentProductId = props.match.params.slug;
     return (
         <Helmet>
             <Section>
@@ -36,7 +33,13 @@ const Product = props => {
                 <SectionBody>
                     {/* <ReviewProduct/>
                     <ListComment/> */}
-                    <ListReview/>
+                    {/* <ListReview/> */}
+                    <div className='container'>
+                        <div className='row'>
+                        <ListComment commentProductId={commentProductId}/>
+                        <ReviewProduct dataReview={props}/>
+                        </div>
+                    </div>
                 </SectionBody>
             </Section>
             <Section>

@@ -61,15 +61,7 @@ const Contact = () => {
                             <Form.Control type="email" placeholder="Email" />
                           </Form.Group>
                         </Col>
-                        <Col sm={12}>
-                          <Form.Group
-                            className="mb-3"
-                            controlId="formBasicEmail"
-                          >
-                            <Form.Label>Email</Form.Label>
-                            <Form.Control type="email" placeholder="Email" />
-                          </Form.Group>
-                        </Col>
+                       
                         <Col sm={12}>
                           <Form.Label>Example textarea</Form.Label>
                           <Form.Control as="textarea" rows={2} placeholder="Contact"/>

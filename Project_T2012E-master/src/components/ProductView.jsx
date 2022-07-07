@@ -18,26 +18,34 @@ import OrderInformation from "./OrderInformation";
 
 const ProductView = (props) => {
   const [products, setProduct] = useState([]);
-  useEffect(()=>{
-       const fetchData = async () =>{
-            const data = await axios.get(`https://elevatorsystemdashboard.azurewebsites.net/api/Elevators/${props.match.params.slug}`);
-            if(data.status == 200){
-                 setProduct(data.data);
-            }else{
-                 alert('loi')
-            }
-            
-       }
-       fetchData();
-  },[]);
-
-  
-  // console.log('props 123 ', props)
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await axios.get(
+        `https://elevatorsystemdashboard.azurewebsites.net/api/Elevators/${props.match.params.slug}`
+      );
+      if (data.status == 200) {
+        setProduct(data.data);
+      } else {
+        alert("loi");
+      }
+    };
+    fetchData();
+  }, []);
 
   const dispatch = useDispatch();
 
   let product = products;
-  console.log('Product',product)
+
+  // useEffect(() => {
+  // ✅ Using if/else statement
+  let str = products.Thumbnails;
+  let arr = [];
+  if (typeof str === "string") {
+    arr = str.split(",");
+    // do stuff with arr
+  } else {
+    console.log("str is not a string");
+  }
 
   if (product === undefined)
     product = {
@@ -52,7 +60,7 @@ const ProductView = (props) => {
       description: "",
     };
 
-  const [previewImg, setPreviewImg] = useState(product.image01);
+  const [previewImg, setPreviewImg] = useState(arr[0]);
 
   const [descriptionExpand, setDescriptionExpand] = useState(false);
 
@@ -71,7 +79,7 @@ const ProductView = (props) => {
   };
 
   useEffect(() => {
-    setPreviewImg(product.image01);
+    // setPreviewImg(product.image01);
     setQuantity(1);
     setColor(undefined);
     setSize(undefined);
@@ -132,19 +140,36 @@ const ProductView = (props) => {
         <div className="product__images__list">
           <div
             className="product__images__list__item"
-            // onClick={() => setPreviewImg(`https://elevatorsystemdashboard.azurewebsites.net${product.Thumbnails.split(',')[0]}`)}
+            onClick={() =>
+              setPreviewImg(
+                `https://elevatorsystemdashboard.azurewebsites.net${arr[0]}`
+              )
+            }
           >
-            {/* <img src={`https://elevatorsystemdashboard.azurewebsites.net${product.Thumbnails.split(',')[0]}`} alt="" /> */}
+            <img
+              src={`https://elevatorsystemdashboard.azurewebsites.net${arr[0]}`}
+              alt=""
+            />
           </div>
           <div
             className="product__images__list__item"
-            // onClick={() => setPreviewImg(`https://elevatorsystemdashboard.azurewebsites.net${product.Thumbnails.split(',')[1]}`)}
+            onClick={() =>
+              setPreviewImg(
+                `https://elevatorsystemdashboard.azurewebsites.net${arr[1]}`
+              )
+            }
           >
-            {/* <img src={`https://elevatorsystemdashboard.azurewebsites.net${product.Thumbnails.split(',')[1]}`} alt="" /> */}
+            <img
+              src={`https://elevatorsystemdashboard.azurewebsites.net${arr[1]}`}
+              alt=""
+            />
           </div>
         </div>
         <div className="product__images__main">
-          {/* <img src={`https://elevatorsystemdashboard.azurewebsites.net${product.Thumbnails.split(',')[2]}`} alt="" /> */}
+          <img
+            src={`https://elevatorsystemdashboard.azurewebsites.net${arr[2]}`}
+            alt=""
+          />
         </div>
         <div
           className={`product-description ${descriptionExpand ? "expand" : ""}`}
@@ -229,10 +254,9 @@ const ProductView = (props) => {
         <div className="product__info__item">
           {/* <Button onClick={() => addToCart()}>thêm vào giỏ</Button> */}
           <Button onClick={() => goToCart()}>mua ngay</Button>
-          
-          <OrderInformation/>
+
+          <OrderInformation />
         </div>
-        
       </div>
       <div
         className={`product-description mobile ${

@@ -5,14 +5,15 @@ import Helmet from '../components/Helmet'
 import CheckBox from '../components/CheckBox'
 
 import productData from '../assets/fake-data/products'
-import category from '../assets/fake-data/category'
+// import category from '../assets/fake-data/category'
 import colors from '../assets/fake-data/product-color'
 import size from '../assets/fake-data/product-size'
 import Button from '../components/Button'
 import InfinityList from '../components/InfinityList'
 
 const Catalog = () => {
-    const [product, setProduct] = useState([]);
+    const [listProduct, setProduct] = useState([]);
+    const [category, setCategory] = useState([]);
     useEffect(()=>{
          const fetchData = async () =>{
               const data = await axios.get('https://elevatorsystemdashboard.azurewebsites.net/api/Elevators');
@@ -25,16 +26,31 @@ const Catalog = () => {
          }
          fetchData();
     },[]);
+    console.log('listProduct',listProduct)
+
+    useEffect(()=>{
+        const fetchData = async () =>{
+             const data = await axios.get('https://elevatorsystemdashboard.azurewebsites.net/api/Categories');
+             if(data.status == 200){
+                setCategory(data.data);
+             }else{
+                  alert('loi')
+             }
+             
+        }
+        fetchData();
+   },[]);
+//    console.log('category', category)
    
     const initFilter = {
         category: [],
-        color: [],
-        size: []
+        // color: [],
+        // size: []
     }
 
-    const productList = productData.getAllProducts()
+    // const productList = productData.getAllProducts()
 
-    const [products, setProducts] = useState(productList)
+    const [products, setProducts] = useState(listProduct)
 
     const [filter, setFilter] = useState(initFilter)
 
@@ -42,30 +58,18 @@ const Catalog = () => {
         if (checked) {
             switch(type) {
                 case "CATEGORY":
-                    setFilter({...filter, category: [...filter.category, item.categorySlug]})
+                    setFilter({...filter, category: [...filter.category, item.ID]})
                     break
-                case "COLOR":
-                    setFilter({...filter, color: [...filter.color, item.color]})
-                    break
-                case "SIZE":
-                    setFilter({...filter, size: [...filter.size, item.size]})
-                    break
+               
                 default:
             }
         } else {
             switch(type) {
                 case "CATEGORY":
-                    const newCategory = filter.category.filter(e => e !== item.categorySlug)
+                    const newCategory = filter.category.filter(e => e !== item.ID)
                     setFilter({...filter, category: newCategory})
                     break
-                case "COLOR":
-                    const newColor = filter.color.filter(e => e !== item.color)
-                    setFilter({...filter, color: newColor})
-                    break
-                case "SIZE":
-                    const newSize = filter.size.filter(e => e !== item.size)
-                    setFilter({...filter, size: newSize})
-                    break
+               
                 default:
             }
         }
@@ -75,29 +79,15 @@ const Catalog = () => {
 
     const updateProducts = useCallback(
         () => {
-            let temp = productList
+            let temp = listProduct
 
             if (filter.category.length > 0) {
-                temp = temp.filter(e => filter.category.includes(e.categorySlug))
-            }
-
-            if (filter.color.length > 0) {
-                temp = temp.filter(e => {
-                    const check = e.colors.find(color => filter.color.includes(color))
-                    return check !== undefined
-                })
-            }
-
-            if (filter.size.length > 0) {
-                temp = temp.filter(e => {
-                    const check = e.size.find(size => filter.size.includes(size))
-                    return check !== undefined
-                })
-            }
+                temp = temp.filter(e => filter.category.includes(e.CategoryID))
+            }   
 
             setProducts(temp)
         },
-        [filter, productList],
+        [filter, listProduct],
     )
 
     useEffect(() => {
@@ -124,9 +114,9 @@ const Catalog = () => {
                                 category.map((item, index) => (
                                     <div key={index} className="catalog__filter__widget__content__item">
                                         <CheckBox
-                                            label={item.display}
+                                            label={item.Name}
                                             onChange={(input) => filterSelect("CATEGORY", input.checked, item)}
-                                            checked={filter.category.includes(item.categorySlug)}
+                                            checked={filter.category.includes(item.ID)}
                                         />
                                     </div>
                                 ))
@@ -134,7 +124,7 @@ const Catalog = () => {
                         </div>
                     </div>
 
-                    <div className="catalog__filter__widget">
+                    {/* <div className="catalog__filter__widget">
                         <div className="catalog__filter__widget__title">
                             màu sắc
                         </div>
@@ -151,8 +141,8 @@ const Catalog = () => {
                                 ))
                             }
                         </div>
-                    </div>
-
+                    </div> */}
+ {/*
                     <div className="catalog__filter__widget">
                         <div className="catalog__filter__widget__title">
                             kích cỡ
@@ -170,7 +160,7 @@ const Catalog = () => {
                                 ))
                             }
                         </div>
-                    </div>
+                    </div> */}
 
                     <div className="catalog__filter__widget">
                         <div className="catalog__filter__widget__content">
@@ -183,7 +173,7 @@ const Catalog = () => {
                 </div>
                 <div className="catalog__content">
                     <InfinityList
-                        product={product}
+                        product={products}
                     />
                 </div>
             </div>

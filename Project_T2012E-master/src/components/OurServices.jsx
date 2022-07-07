@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { FaAtom,FaArrowRight,FaPhoneSquareAlt } from "react-icons/fa";
+import { FaHammer,FaEnvelope,FaPhoneSquareAlt,FaHouseUser } from "react-icons/fa";
 
 const OurServices = () => {
   return (
@@ -20,6 +20,42 @@ const OurServices = () => {
                             <div class="d-flex">
                                 <i class="fa fa-3x fa-laptop-code text-primary mr-4" style={{width: '60px'}}>
                                    <FaPhoneSquareAlt style={{width: '50px', height:'50px', color:'black', marginRight:'8px', color:'#4267b2'}}/>
+                                </i>
+                                <div class="d-flex flex-column">
+                                    <h4 class="font-weight-bold mb-3">Bảo trì 24/7</h4>
+                                    <p>Et kasd justo clita amet kasd, vero amet vero eos kasd diam justo, ipsum diam sed elitr erat</p>
+                                    <a class="font-weight-semi-bold" href="" style={{color:'#4267b2 !important'}}>Read More<i class="fa fa-angle-double-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-5">
+                            <div class="d-flex">
+                                <i class="fa fa-3x fa-laptop-code text-primary mr-4" style={{width: '60px'}}>
+                                   <FaEnvelope style={{width: '50px', height:'50px', color:'black', marginRight:'8px', color:'#4267b2'}}/>
+                                </i>
+                                <div class="d-flex flex-column">
+                                    <h4 class="font-weight-bold mb-3">Bảo trì 24/7</h4>
+                                    <p>Et kasd justo clita amet kasd, vero amet vero eos kasd diam justo, ipsum diam sed elitr erat</p>
+                                    <a class="font-weight-semi-bold" href="" style={{color:'#4267b2 !important'}}>Read More<i class="fa fa-angle-double-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-5">
+                            <div class="d-flex">
+                                <i class="fa fa-3x fa-laptop-code text-primary mr-4" style={{width: '60px'}}>
+                                   <FaHammer style={{width: '50px', height:'50px', color:'black', marginRight:'8px', color:'#4267b2'}}/>
+                                </i>
+                                <div class="d-flex flex-column">
+                                    <h4 class="font-weight-bold mb-3">Bảo trì 24/7</h4>
+                                    <p>Et kasd justo clita amet kasd, vero amet vero eos kasd diam justo, ipsum diam sed elitr erat</p>
+                                    <a class="font-weight-semi-bold" href="" style={{color:'#4267b2 !important'}}>Read More<i class="fa fa-angle-double-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-5">
+                            <div class="d-flex">
+                                <i class="fa fa-3x fa-laptop-code text-primary mr-4" style={{width: '60px'}}>
+                                   <FaHouseUser style={{width: '50px', height:'50px', color:'black', marginRight:'8px', color:'#4267b2'}}/>
                                 </i>
                                 <div class="d-flex flex-column">
                                     <h4 class="font-weight-bold mb-3">Bảo trì 24/7</h4>

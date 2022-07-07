@@ -7,7 +7,6 @@ import ProductCard from './ProductCard'
 
 const InfinityList = props => {
    const {product} = props
-   console.log('propsssssss', product)
 
     const perLoad = 6 // items each load
 

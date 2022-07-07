@@ -26,7 +26,7 @@ import Product1 from '../components/ListProduct'
 // import Images from '../assets/fake-data/images'
 
 const Home = () => {
-    const bannerElevator = "http://www.wvtelevators.com/wp-content/uploads/2016/07/panaromic-elevator-banner.jpg"
+    // const bannerElevator = "http://www.wvtelevators.com/wp-content/uploads/2016/07/panaromic-elevator-banner.jpg"
     return (
         <Helmet title="Trang chủ">
             <HeroSlider images={Images} />
@@ -59,7 +59,7 @@ const Home = () => {
                 <OurTeam/>
                 <OurServices/>
                 <Statistical/>
-                <Product1/>
+               
             </Section>
             {/* end best selling section */}
 

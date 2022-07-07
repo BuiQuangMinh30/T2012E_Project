@@ -1,6 +1,35 @@
-import React from 'react'
+import React, { useState,useEffect } from 'react'
+import axios from 'axios';
 
 const Statistical = () => {
+    const [products, setProducts] = useState([])
+    const [blogs, setBlogs] = useState([]);
+    useEffect(() => {
+        const fetchData = async () => {
+          const data = await axios.get(
+            `https://elevatorsystemdashboard.azurewebsites.net/api/Elevators`
+          );
+          if (data.status == 200) {
+            setProducts(data.data);
+          } else {
+            alert("loi");
+          }
+        };
+        fetchData();
+      }, []);
+      useEffect(() => {
+        const fetchData = async () => {
+          const data = await axios.get(
+            `https://elevatorsystemdashboard.azurewebsites.net/api/Blogs`
+          );
+          if (data.status == 200) {
+            setBlogs(data.data);
+          } else {
+            alert("loi");
+          }
+        };
+        fetchData();
+      }, []);
   return (
     <>
       <div class="container-fluid pt-5 pb-2" style={{backgroundColor: 'rgb(248 248 248)', marginTop: '150px'}}>
@@ -21,14 +50,14 @@ const Statistical = () => {
                     <div class="row">
                         <div class="col-sm-6 pb-1">
                             <div class="d-flex flex-column align-items-center border px-4 mb-4">
-                                <h2 class="display-3 mb-3" data-toggle="counter-up" style={{color:'#4267b2', fontWeight:'600'}}>25</h2>
-                                <h5 class="font-weight-bold mb-4">Years Expereince</h5>
+                                <h2 class="display-3 mb-3" data-toggle="counter-up" style={{color:'#4267b2', fontWeight:'600'}}>{products.length}</h2>
+                                <h5 class="font-weight-bold mb-4">Products</h5>
                             </div>
                         </div>
                         <div class="col-sm-6 pb-1">
                             <div class="d-flex flex-column align-items-center border px-4 mb-4">
-                                <h2 class="display-3 mb-3" data-toggle="counter-up" style={{color:'#4267b2', fontWeight:'600'}}>225</h2>
-                                <h5 class="font-weight-bold mb-4">SKilled Experts</h5>
+                                <h2 class="display-3 mb-3" data-toggle="counter-up" style={{color:'#4267b2', fontWeight:'600'}}>{blogs.length}</h2>
+                                <h5 class="font-weight-bold mb-4">Blogs</h5>
                             </div>
                         </div>
                         <div class="col-sm-6 pb-1">

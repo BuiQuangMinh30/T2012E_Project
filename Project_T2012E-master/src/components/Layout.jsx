@@ -19,27 +19,9 @@ import HeroSlider from "./HeroSlider";
 
 import Images from '../assets/fake-data/images'
 import ScrollButton from "./ScrollButton";
+import Profile from "../pages/Profile";
 
 const Layout = () => {
-  const api = `https://localhost:44399/api/Profile12`;
-  let dataUser = {};
-
-  useEffect(() => {
-    async function fetchMyAPI() {
-      var getToken = JSON.parse(localStorage.getItem("dataUser"));
-      const getToken1 = getToken.access_token;
-      let resData = await axios.get(api, {
-          headers: {
-            Authorization: `Bearer ${getToken1}`,
-          },
-        })
-        dataUser = resData.data.data;
-        console.log('resData',dataUser);
-    }
-    fetchMyAPI();
-
-
-  }, [dataUser]);
   
   return (
     <BrowserRouter>
@@ -55,7 +37,7 @@ const Layout = () => {
              
               <div className="container">
                 <div className="main">
-                  <Routes dataUser={dataUser}/>
+                  <Routes/>
                 </div>
               </div>
               <Footer />

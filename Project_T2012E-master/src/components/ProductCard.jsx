@@ -13,15 +13,6 @@ import numberWithCommas from '../utils/numberWithCommas'
 
 // props home component
 const ProductCard = props => {
-    console.log('props, props',props)
-
-    let image = '';
-    let counter = props.img.split(",").length - 1
-    console.log('counter'   , counter)
-    if(counter  == 0){
-        image = props.img
-    }
-        image = props.img.split(',')[0];
 
 
     const dispatch = useDispatch()
@@ -32,7 +23,7 @@ const ProductCard = props => {
             {/* <Link to={`/catalog/${props.slug}`}> */}
             <Link to={`/catalog/${props.ID}`}>
                 <div className="product-card__image">
-                    <img src={`https://elevatorsystemdashboard.azurewebsites.net${image}`} alt="" />
+                    <img src={`https://elevatorsystemdashboard.azurewebsites.net${props.img.split(',')[0]}`} alt="" />
                     {/* <img src={props.img02} alt="" /> */}
                 </div>
                 {/* <h3 className="product-card__name">{props.name}</h3> */}
