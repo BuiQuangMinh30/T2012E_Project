@@ -19,7 +19,6 @@ const ListProduct = () => {
           }
           fetchData();
      },[]);
-     console.log('props', products);
   return (
     <>
      {/* <ProductCard products={products}/> */}

@@ -31,9 +31,6 @@ const Product = props => {
                     Review Product
                 </SectionTitle>
                 <SectionBody>
-                    {/* <ReviewProduct/>
-                    <ListComment/> */}
-                    {/* <ListReview/> */}
                     <div className='container'>
                         <div className='row'>
                         <ListComment commentProductId={commentProductId}/>

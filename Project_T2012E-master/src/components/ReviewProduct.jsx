@@ -15,11 +15,11 @@ const colors = {
 const ReviewProduct = (props) => {
   // console.log('review product', props.dataReview.match.params.slug)
   const ElevatorId = props.dataReview.match.params.slug;
-
   const [currentValue, setCurrentValue] = useState(0);
   const [hoverValue, setHoverValue] = useState(undefined);
   const [commentFeedback, setComment] = useState("");
   const [profile, setProfile] = useState({});
+  var getToken = JSON.parse(localStorage.getItem("dataUser"));
 
   const dateNow = new Date();
 
@@ -48,9 +48,10 @@ const ReviewProduct = (props) => {
     Problem: dateNow,
     Improvement: "https://haycafe.vn/wp-content/uploads/2022/03/avatar-facebook-doc.jpg"
   };
-  var getToken = JSON.parse(localStorage.getItem("dataUser"));
-  const getToken1 = getToken.access_token;
+  
   const submitData = async (e) => {
+    
+  const getToken1 = getToken.access_token;
     e.preventDefault();
     axios
       .post(urlFeedback, infoComment, {
@@ -60,7 +61,7 @@ const ReviewProduct = (props) => {
         },
       })
       .then((result) => {
-        console.log('result', result);
+        // console.log('result', result);
         if (result.status == 200) {
           setComment("");
           setHoverValue(undefined);
@@ -75,58 +76,68 @@ const ReviewProduct = (props) => {
   return (
     <>
       <div className="col-lg-4 col-md-6 col-sm-4col-12 mt-4">
-        <form>
-          <div className="form-group">
-            <h4>Leave a comment</h4>
-            <label for="message">Message</label>
-            <textarea
-              style={styles.textarea}
-              name="msg"
-              id=""
-              msg
-              cols="30"
-              rows="5"
-              // className="form-control"
-              value={commentFeedback}
-              onChange={(e) => setComment(e.target.value)}
-            ></textarea>
-          </div>
+        {/* <form> */}
+        {getToken && getToken ? 
+         <>
+         <div className="form-group">
+           <h4>Leave a comment</h4>
+           <label for="message">Message</label>
+           <textarea
+             style={styles.textarea}
+             name="msg"
+             id=""
+             msg
+             cols="30"
+             rows="5"
+             // className="form-control"
+             value={commentFeedback}
+             onChange={(e) => setComment(e.target.value)}
+           ></textarea>
+         </div>
 
-          <div className="form-group">
-            <label for="message" style={{ marginBottom: "10px" }}>
-              Rate Star
-            </label>
-            <br />
-            {/* <br></br> */}
-            {stars.map((_, index) => {
-              return (
-                <FaStar
-                  key={index}
-                  value={currentValue}
-                  size={24}
-                  onClick={() => handleClick(index + 1)}
-                  onMouseOver={() => handleMouseOver(index + 1)}
-                  onMouseLeave={handleMouseLeave}
-                  color={
-                    (hoverValue || currentValue) > index
-                      ? colors.orange
-                      : colors.grey
-                  }
-                  style={{
-                    marginRight: 10,
-                    cursor: "pointer",
-                  }}
-                />
-              );
-            })}
-          </div>
+         <div className="form-group">
+           <label for="message" style={{ marginBottom: "10px" }}>
+             Rate Star
+           </label>
+           <br />
+           {/* <br></br> */}
+           {stars.map((_, index) => {
+             return (
+               <FaStar
+                 key={index}
+                 value={currentValue}
+                 size={24}
+                 onClick={() => handleClick(index + 1)}
+                 onMouseOver={() => handleMouseOver(index + 1)}
+                 onMouseLeave={handleMouseLeave}
+                 color={
+                   (hoverValue || currentValue) > index
+                     ? colors.orange
+                     : colors.grey
+                 }
+                 style={{
+                   marginRight: 10,
+                   cursor: "pointer",
+                 }}
+               />
+             );
+           })}
+         </div>
 
-          <div className="form-group">
-            <button style={styles.button} width={"50px"} onClick={submitData}>
-              SUBMIT
-            </button>
-          </div>
-        </form>
+         <div className="form-group">
+           <button style={styles.button} width={"50px"} onClick={submitData}>
+             SUBMIT
+           </button>
+         </div>
+         </>
+         :
+         <>
+          <h5>Bạn phải login mới feedback được</h5>
+          {/* <button></button> */}
+         </>
+      }
+         
+        {/* </form> */}
       </div>
     </>
   );

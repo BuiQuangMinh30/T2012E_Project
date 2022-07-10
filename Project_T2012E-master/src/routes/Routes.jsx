@@ -25,8 +25,8 @@ const Routes = (props) => {
         <Route path="/about" component={About} />
         <Route path="/blogs" component={Blog} />
         <Route path="/profile" 
-        // component={Profile}
-        component={props => <Profile {...props} isAuthed={true} />}
+        component={Profile}
+        // component={props => <Profile {...props} isAuthed={true} />}
         />
         <Route path="/contact" component={Contact} />
       </Switch>

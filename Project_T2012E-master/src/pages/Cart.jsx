@@ -1,30 +1,63 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 import Helmet from '../components/Helmet'
 import CartItem from '../components/CartItem'
 import Button from '../components/Button'
-
-import productData from '../assets/fake-data/products'
 import numberWithCommas from '../utils/numberWithCommas'
+import axios from 'axios'
+import { addcartItem, removecartItem, clearOrder } from '../redux/shopping-cart-2/shoppingCart'
+import OrderInformation from '../components/OrderInformation'
 
+import { useHistory } from "react-router-dom";
 const Cart = () => {
 
-    const cartItems = useSelector((state) => state.cartItems.value)
+    const cartItems = useSelector((state) => state.cart.cartItems);
+    const dispatch = useDispatch()
+    var checkOrder = JSON.parse(localStorage.getItem("checkOrder")) || false;
+    var IDorder = JSON.parse(localStorage.getItem("IdOrder"));
+    let history = useHistory();
+    const removeCartItem = (Id) => {
+        dispatch(removecartItem(Id))
+    }
+    var total = 0;
+    for (var i = 0; i < cartItems.length; i++) {
+        total += cartItems[i].Price;
+    }
 
-    const [cartProducts, setCartProducts] = useState(productData.getCartItemsInfo(cartItems))
+    const handleCreateCart = async (id, qty) => {
+        try {
+            var data = await axios.get(`https://elevatorsystemdashboard.azurewebsites.net/api/Elevators/${id}`);
+            dispatch(addcartItem({ Id: id, Image: data.data.Thumbnails.split(',')[0], Name: data.data.Name, Price: data.data.Price * parseInt(qty), qty: parseInt(qty) }));
+        } catch (err) {
+            console.log(err);
+        }
+    }
 
-    const [totalProducts, setTotalProducts] = useState(0)
+    const HandlerCreateOrderItem = async () => {
+        if (IDorder !== null) {
+            try {
+                for (var i = 0; i < cartItems.length; i++) {
+                    await axios.post("https://elevatorsystemdashboard.azurewebsites.net/api/Order_Items", {
+                        NumberOfFloor: 1,
+                        Quantity: cartItems[i].qty,
+                        ElevatorID: cartItems[i].Id,
+                        OrderID: IDorder
+                    });
+                }
+                dispatch(clearOrder());
 
-    const [totalPrice, setTotalPrice] = useState(0)
+                window.location.reload();
+                history.push('catalog');
+            } catch (err) {
+                console.log(err)
+            }
+        }
+    }
+    
 
-    useEffect(() => {
-        setCartProducts(productData.getCartItemsInfo(cartItems))
-        setTotalPrice(cartItems.reduce((total, item) => total + (Number(item.quantity) * Number(item.price)), 0))
-        setTotalProducts(cartItems.reduce((total, item) => total + Number(item.quantity), 0))
-    }, [cartItems])
 
     return (
         <Helmet title="Giỏ hàng">
@@ -32,28 +65,86 @@ const Cart = () => {
                 <div className="cart__info">
                     <div className="cart__info__txt">
                         <p>
-                            Bạn đang có {totalProducts} sản phẩm trong giỏ hàng
+                            Bạn đang có {cartItems.length} sản phẩm trong giỏ hàng
                         </p>
                         <div className="cart__info__txt__price">
-                            <span>Thành tiền:</span> <span>{numberWithCommas(Number(totalPrice))}</span>
+                            <span>Thành tiền:</span> {total}<span></span>
                         </div>
                     </div>
                     <div className="cart__info__btn">
-                        <Button size="block">
-                            Đặt hàng
-                        </Button>
+                        {
+                            checkOrder ? (
+                                <Button size="block" onClick={HandlerCreateOrderItem}>
+                                    {/* {/ <OrderInformation /> /} */}
+
+                                    Checkout
+                                </Button>
+                            ) : (
+                                <Button size="block">
+                                    {/* {/ <OrderInformation /> /} */}
+
+                                    <OrderInformation total={total} />
+                                </Button>
+                            )
+                        }
+
                         <Link to="/catalog">
-                            <Button size="block">
-                                Tiếp tục mua hàng
-                            </Button>
+                            {
+                                 checkOrder ?  "" :<Button size="block">
+                                 Tiếp tục mua hàng
+                             </Button>
+                            }
+                            
                         </Link>
-                        
+
                     </div>
                 </div>
+               
                 <div className="cart__list">
+                <thead>
+              <tr>
+                {/* <th>Product</th> */}
+                <th style={{paddingRight: '80px', paddingLeft:'30px'}}>Image</th>
+                <th style={{paddingRight: '220px'}}>Product</th>
+                <th style={{paddingRight: '220px'}}>Price</th>
+                <th style={{paddingRight: '100px'}}>Total</th>
+                <th></th>
+              </tr>
+            </thead>
+            <br/>
+            <br/>
+            {/* <br/> */}
                     {
-                        cartProducts.map((item, index) => (
-                            <CartItem item={item} key={index}/>
+                        cartItems.map((item) => (
+                            <div className="cart__item" >
+                                
+                                <div className="cart__item__image">
+                                    <img src={"https://elevatorsystemdashboard.azurewebsites.net" + item.Image} style={{width:'100px'}} alt="" />
+                                </div>
+                                <div className="cart__item__info">
+                                    <div className="cart__item__info__name">
+                                        <Link to={`/catalog/${item.Id}`}>
+                                            {`${item.Name}`}
+                                        </Link>
+                                    </div>
+                                    <div className="cart__item__info__price" style={{minWidth: '200px'}}>
+                                        {numberWithCommas(item.Price)}
+                                    </div>
+                                    <div className="cart__item__info__quantity">
+                                        <div className="product__info__item__quantity">
+                                            <div className="product__info__item__quantity__input">
+                                                <input value={item.qty ? item.qty : 1} onChange={(e) => handleCreateCart(item.Id, e.target.value)} type="number" name="qty" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="cart__item__del">
+                                        <span onClick={() => removeCartItem(item.Id)}>
+                                            <i className='bx bx-trash' ></i>
+                                        </span>
+
+                                    </div>
+                                </div>
+                            </div>
                         ))
                     }
                 </div>

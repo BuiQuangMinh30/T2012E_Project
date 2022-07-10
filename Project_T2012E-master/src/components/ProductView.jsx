@@ -16,6 +16,8 @@ import { Modal, Row, Col } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import OrderInformation from "./OrderInformation";
 
+import { addcartItem, removecartItem, clearOrder } from '../redux/shopping-cart-2/shoppingCart'
+
 const ProductView = (props) => {
   const [products, setProduct] = useState([]);
   useEffect(() => {
@@ -54,19 +56,17 @@ const ProductView = (props) => {
       image01: null,
       image02: null,
       categorySlug: "",
-      colors: [],
+      speed: "",
       slug: "",
-      size: [],
+      sku: "",
+      capacity:"",
+      maxPerson:"",
       description: "",
     };
 
   const [previewImg, setPreviewImg] = useState(arr[0]);
 
   const [descriptionExpand, setDescriptionExpand] = useState(false);
-
-  const [color, setColor] = useState(undefined);
-
-  const [size, setSize] = useState(undefined);
 
   const [quantity, setQuantity] = useState(1);
 
@@ -79,61 +79,44 @@ const ProductView = (props) => {
   };
 
   useEffect(() => {
-    // setPreviewImg(product.image01);
     setQuantity(1);
-    setColor(undefined);
-    setSize(undefined);
   }, [product]);
 
-  const check = () => {
-    if (color === undefined) {
-      alert("Vui lòng chọn màu sắc!");
-      return false;
-    }
-
-    if (size === undefined) {
-      alert("Vui lòng chọn kích cỡ!");
-      return false;
-    }
-
-    return true;
-  };
-
   const addToCart = () => {
-    if (check()) {
+    // if (check()) {
       let newItem = {
         slug: product.slug,
-        color: color,
-        size: size,
-        price: product.price,
+        sku: product.SKU,
+        capacity: product.Capacity,
+        price: product.Price,
         quantity: quantity,
       };
-      if (dispatch(addItem(newItem))) {
+      if (dispatch(addcartItem(newItem))) {
         alert("Success");
       } else {
         alert("Fail");
       }
-    }
+    // }
   };
 
   const goToCart = () => {
-    if (check()) {
+    // if (check()) {
       let newItem = {
-        slug: product.slug,
-        color: color,
-        size: size,
-        price: product.price,
-        quantity: quantity,
+        Id: product.ID,
+        Image: product.Thumbnails.split(',')[0],
+        Name: product.Name,
+        Price: product.Price,
+        qty: quantity,
       };
-      if (dispatch(addItem(newItem))) {
-        dispatch(remove());
+      if (newItem) {
+        // dispatch(remove());
+        dispatch(addcartItem(newItem))
         props.history.push("/cart");
       } else {
         alert("Fail");
       }
-    }
+    // }
   };
-
   return (
     <div className="product">
       <div className="product__images">
@@ -192,47 +175,34 @@ const ProductView = (props) => {
       <div className="product__info">
         <h1 className="product__info__title">{product.Name}</h1>
         <div className="product__info__item">
-          <span className="product__info__item__price">
+        <div className="product__info__item__title">Total:  {product.Price} VNĐ</div>
+        {/* <div className="product__info__item__title">SKU:  </div> */}
+        {/* <div className="product__info__item__title">SKU:  {product.SKU}</div> */}
+          {/* <span className="product__info__item__price"> */}
             {/* {numberWithCommas(product.price)} */}
-            {product.Price} VNĐ
-          </span>
+           {/* {product.Price} VNĐ */}
+          {/* </span> */}
         </div>
         <div className="product__info__item">
-          <div className="product__info__item__title">Màu sắc</div>
+          <div className="product__info__item__title">SKU</div>
           <div className="product__info__item__list">
-            {/* {product.colors.map((item, index) => (
-              <div
-                key={index}
-                className={`product__info__item__list__item ${
-                  color === item ? "active" : ""
-                }`}
-                onClick={() => setColor(item)}
-              >
-                <div className={`circle bg-${item}`}></div>
-              </div>
-            ))} */}
+          {product.SKU}
           </div>
         </div>
         <div className="product__info__item">
-          <div className="product__info__item__title">Kích cỡ</div>
+          <div className="product__info__item__title">Specifications</div>
           <div className="product__info__item__list">
-            {/* {product.size.map((item, index) => (
-              <div
-                key={index}
-                className={`product__info__item__list__item ${
-                  size === item ? "active" : ""
-                }`}
-                onClick={() => setSize(item)}
-              >
-                <span className="product__info__item__list__item__size">
-                  {item}
-                </span>
-              </div>
-            ))} */}
+          SpeedMax: {product.Speed} (Km/h), MaxPerson: {product.MaxPerson}
           </div>
         </div>
+        {/* <div className="product__info__item">
+          <div className="product__info__item__title">Capacity</div>
+          <div className="product__info__item__list">
+          {product.Capacity}
+          </div>
+        </div> */}
         <div className="product__info__item">
-          <div className="product__info__item__title">Số lượng</div>
+          <div className="product__info__item__title">Count</div>
           <div className="product__info__item__quantity">
             <div
               className="product__info__item__quantity__btn"
@@ -255,7 +225,7 @@ const ProductView = (props) => {
           {/* <Button onClick={() => addToCart()}>thêm vào giỏ</Button> */}
           <Button onClick={() => goToCart()}>mua ngay</Button>
 
-          <OrderInformation />
+          {/* <OrderInformation /> */}
         </div>
       </div>
       <div

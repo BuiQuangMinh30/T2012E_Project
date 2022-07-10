@@ -1,51 +1,54 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 import { useDispatch } from 'react-redux'
-
-import { set } from '../redux/product-modal/productModalSlice'
+import axios from 'axios'
 
 import Button from './Button'
+import { addcartItem } from '../redux/shopping-cart-2/shoppingCart'
 
-import numberWithCommas from '../utils/numberWithCommas'
 
 // props home component
 const ProductCard = props => {
-
-
     const dispatch = useDispatch()
+    const history = useHistory();
+    const handleCreateCart = async (id) => {
+        try {
+            var data = await axios.get(`https://elevatorsystemdashboard.azurewebsites.net/api/Elevators/${id}`);
+            dispatch(addcartItem({ Id: id, Image: data.data.Thumbnails.split(',')[0], Name: data.data.Name, Price: data.data.Price * 1, qty: 1 }));
+            history.push("/cart");
+        } catch (err) {
+            console.log(err);
+        }
+    }
 
     return (
         <div className="product-card">
-            {/* <h2>hello</h2> */}
-            {/* <Link to={`/catalog/${props.slug}`}> */}
+
             <Link to={`/catalog/${props.ID}`}>
                 <div className="product-card__image">
                     <img src={`https://elevatorsystemdashboard.azurewebsites.net${props.img.split(',')[0]}`} alt="" />
-                    {/* <img src={props.img02} alt="" /> */}
+
                 </div>
-                {/* <h3 className="product-card__name">{props.name}</h3> */}
+
                 <h3 className="product-card__name">{props.name}</h3>
                 <div className="product-card__price">
                     {props.price} VNĐ
-                    {/* <span className="product-card__price__old">
-                        <del>{numberWithCommas(399000)}</del>
-                    </span> */}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  </div>
+                </div>
             </Link>
             <div className="product-card__btn">
                 <Button
-                    size="sm"    
+                    size="sm"
                     icon="bx bx-cart"
                     animate={true}
-                    // onClick={() => dispatch(set(props.slug))}
+                    onClick={() => handleCreateCart(props.ID)}
                 >
-                    Xem chi tiết
+                    Mua hàng
                 </Button>
             </div>
-        </div>
+        </div >
     )
 }
 
@@ -57,4 +60,4 @@ ProductCard.propTypes = {
     slug: PropTypes.string.isRequired,
 }
 
-export default ProductCard
+export default ProductCard;
