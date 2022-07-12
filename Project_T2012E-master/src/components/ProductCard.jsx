@@ -23,7 +23,6 @@ const ProductCard = props => {
             console.log(err);
         }
     }
-
     return (
         <div className="product-card">
 
@@ -35,7 +34,7 @@ const ProductCard = props => {
 
                 <h3 className="product-card__name">{props.name}</h3>
                 <div className="product-card__price">
-                    {props.price} VNĐ
+                    {props.price} $
                 </div>
             </Link>
             <div className="product-card__btn">
@@ -45,7 +44,8 @@ const ProductCard = props => {
                     animate={true}
                     onClick={() => handleCreateCart(props.ID)}
                 >
-                    Mua hàng
+                    
+Purchase
                 </Button>
             </div>
         </div >

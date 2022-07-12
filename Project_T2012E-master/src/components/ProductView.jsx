@@ -20,6 +20,7 @@ import { addcartItem, removecartItem, clearOrder } from '../redux/shopping-cart-
 
 const ProductView = (props) => {
   const [products, setProduct] = useState([]);
+  const [catagory, setCategory] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
       const data = await axios.get(
@@ -33,18 +34,29 @@ const ProductView = (props) => {
     };
     fetchData();
   }, []);
+  useEffect(()=>{
+    const fetchData = async () =>{
+         const data = await axios.get(`https://elevatorsystemdashboard.azurewebsites.net/api/Categories`);
+         if(data.status == 200){
+            setCategory(data.data);
+         }else{
+              alert('loi')
+         }
+         
+    }
+    fetchData();
+},[]);
+ 
 
   const dispatch = useDispatch();
 
   let product = products;
+  
 
-  // useEffect(() => {
-  // ✅ Using if/else statement
   let str = products.Thumbnails;
   let arr = [];
   if (typeof str === "string") {
     arr = str.split(",");
-    // do stuff with arr
   } else {
     console.log("str is not a string");
   }
@@ -157,7 +169,7 @@ const ProductView = (props) => {
         <div
           className={`product-description ${descriptionExpand ? "expand" : ""}`}
         >
-          <div className="product-description__title">Chi tiết sản phẩm</div>
+          <div className="product-description__title">Product details</div>
           <div
             className="product-description__content"
             dangerouslySetInnerHTML={{ __html: product.Description }}
@@ -167,7 +179,7 @@ const ProductView = (props) => {
               size="sm"
               onClick={() => setDescriptionExpand(!descriptionExpand)}
             >
-              {descriptionExpand ? "Thu gọn" : "Xem thêm"}
+              {descriptionExpand ? "Collapse" : "see more"}
             </Button>
           </div>
         </div>
@@ -175,32 +187,34 @@ const ProductView = (props) => {
       <div className="product__info">
         <h1 className="product__info__title">{product.Name}</h1>
         <div className="product__info__item">
-        <div className="product__info__item__title">Total:  {product.Price} VNĐ</div>
-        {/* <div className="product__info__item__title">SKU:  </div> */}
-        {/* <div className="product__info__item__title">SKU:  {product.SKU}</div> */}
-          {/* <span className="product__info__item__price"> */}
-            {/* {numberWithCommas(product.price)} */}
-           {/* {product.Price} VNĐ */}
-          {/* </span> */}
+        <div className="product__info__item__title">Total: {product.Price}$</div>
+      
+        </div> 
+        <div className="product__info__item">
+          <div className="product__info__item__title">SKU: {product.SKU}</div>
+         
         </div>
         <div className="product__info__item">
-          <div className="product__info__item__title">SKU</div>
-          <div className="product__info__item__list">
+          <div className="product__info__item__title">Capacity: {product.Capacity}(kg)</div>
+          {/* <div className="product__info__item__list">
           {product.SKU}
-          </div>
+          </div> */}
         </div>
         <div className="product__info__item">
-          <div className="product__info__item__title">Specifications</div>
-          <div className="product__info__item__list">
-          SpeedMax: {product.Speed} (Km/h), MaxPerson: {product.MaxPerson}
-          </div>
+          <div className="product__info__item__title">MaxPerson: {product.MaxPerson}(ersons)</div>
         </div>
-        {/* <div className="product__info__item">
-          <div className="product__info__item__title">Capacity</div>
-          <div className="product__info__item__list">
-          {product.Capacity}
-          </div>
-        </div> */}
+        <div className="product__info__item">
+          <div className="product__info__item__title">SpeedMax: {product.Speed}(kms/h)</div>
+        </div>
+        <div className="product__info__item">
+          <div className="product__info__item__title">Catagory: {products && catagory ? catagory.map((item)=>{
+            if(item.ID === products.CategoryID){
+              return (<>{item.Name} </>)
+              // console.log('12',item)
+            }
+          }) : 'Không có' }</div>
+        </div>
+       
         <div className="product__info__item">
           <div className="product__info__item__title">Count</div>
           <div className="product__info__item__quantity">
@@ -223,7 +237,7 @@ const ProductView = (props) => {
         </div>
         <div className="product__info__item">
           {/* <Button onClick={() => addToCart()}>thêm vào giỏ</Button> */}
-          <Button onClick={() => goToCart()}>mua ngay</Button>
+          <Button onClick={() => goToCart()}>buy now</Button>
 
           {/* <OrderInformation /> */}
         </div>
@@ -233,7 +247,7 @@ const ProductView = (props) => {
           descriptionExpand ? "expand" : ""
         }`}
       >
-        <div className="product-description__title">Chi tiết sản phẩm</div>
+        <div className="product-description__title">Product details</div>
         <div
           className="product-description__content"
           dangerouslySetInnerHTML={{ __html: product.Description }}
@@ -243,7 +257,7 @@ const ProductView = (props) => {
             size="sm"
             onClick={() => setDescriptionExpand(!descriptionExpand)}
           >
-            {descriptionExpand ? "Thu gọn" : "Xem thêm"}
+            {descriptionExpand ? "Collapse" : "see more"}
           </Button>
         </div>
       </div>

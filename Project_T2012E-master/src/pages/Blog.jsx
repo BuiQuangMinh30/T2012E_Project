@@ -18,19 +18,24 @@ const Blog = (props) => {
   const apiUrl = "https://elevatorsystemdashboard.azurewebsites.net/api";
 
   const [blogs, setBlogs] = useState([]);
-  const [postsPerPage] = useState(3);
+  const [postsPerPage] = useState(5);
   const [offset, setOffset] = useState(1);
   const [posts, setAllPosts] = useState([]);
   const [pageCount, setPageCount] = useState(0);
-
-  const getAllPosts = async () => {
-    const data = await axios.get(`${apiUrl}/Blogs`);
-    if (data.status == 200) {
-      setBlogs(data.data);
-    } else {
-      alert("loi");
-    }
-    console.log('blos',blogs)
+  useEffect(() => {
+    // setTimeout(()=>{
+      async function callAPI() {
+        const data = await axios.get(`${apiUrl}/Blogs`);
+        // console.log('data', data)
+        if (data.status == 200) {
+          setBlogs(data.data);
+        } else {
+          alert("loi");
+        }
+      }
+      callAPI();
+      // console.log('blogs',blogs)
+    
     const slice = blogs.slice(offset - 1, offset - 1 + postsPerPage);
 
     // For displaying Data
@@ -39,18 +44,15 @@ const Blog = (props) => {
     // Using Hooks to set value
     setAllPosts(postData);
     setPageCount(Math.ceil(blogs.length / postsPerPage));
-  };
-
+    // },3000)
+  //  },3000)
+  }, [offset,blogs]);
   const handlePageClick = (event) => {
     const selectedPage = event.selected;
     setOffset(selectedPage + 1);
   };
 
-  useEffect(() => {
-    setTimeout(()=>{
-      getAllPosts();
-    },1)
-  }, [offset]);
+ 
 
   const getPostData = (data) => {
     return data.map((post) => (
@@ -64,7 +66,7 @@ const Blog = (props) => {
               </a>
             </h2>
             <p>{post && post.Summary ? post.Summary : ""}</p>
-            <p className="text-muted">{post && post.Slug ? post.Slug : ""}</p>
+            {/* <p className="text-muted">{post && post.Slug ? post.Slug : ""}</p> */}
 
             <small className="text-muted">
               {new Date(post.CreatedAt).toLocaleString()}
@@ -76,6 +78,7 @@ const Blog = (props) => {
           style={{
             height: "100px",
             minWidth: "150px",
+            maxWidth: "150px",
           }}
         />
       </div>
@@ -268,7 +271,7 @@ const Blog = (props) => {
             <h5 className="font-weight-bold spanborder">
               <span>All Stories</span>
             </h5>
-            {posts}
+            {posts ? posts : []}
             <ReactPaginate
               previousLabel={"Previous"}
               nextLabel={"Next"}

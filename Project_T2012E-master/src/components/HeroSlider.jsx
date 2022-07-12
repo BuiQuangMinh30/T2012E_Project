@@ -5,7 +5,6 @@ import useSlider from './useSlider'
 import { FaArrowLeft,FaArrowRight } from "react-icons/fa";
 
 const HeroSlider = ({images}) => {
-  console.log('images', images)
   
   const slideImage = useRef(null)
   const slideText = useRef(null)

@@ -6,6 +6,8 @@ const About = () => {
   const [key, setKey] = useState("home");
   const imgAbout = "https://thumbs.dreamstime.com/b/concept-15354944.jpg";
   const img1 = "http://www.omikaelevators.com/images/about-img-1.jpg";
+  const logoUytin =
+    "https://thangmaymini.com/wp-content/uploads/2015/10/hang-thang-may.gif";
   return (
     <>
       <div className="wrapper">
@@ -50,7 +52,7 @@ const About = () => {
 
         <div className="container section about-us mt-4">
           <Row>
-            <Col md={7}>
+            <Col md={7} style={{ fontSize: "16px" }}>
               <div className="about-text">
                 <h2>Company development history</h2>
               </div>
@@ -74,12 +76,178 @@ const About = () => {
                   Liem - Hanoi.
                 </li>
               </div>
+
+              
             </Col>
             <Col md={5}>
               <div className="about-img">
                 <img src={imgAbout} />
               </div>
             </Col>
+          </Row>
+        </div>
+
+        <div className="container section mt-4">
+          <Row style={{ fontSize: "16px" }}>
+          <h3 style={{ marginTop: "20px", textAlign: "center" }}>
+                Products of elevator company ToangCSharp
+              </h3>
+
+              <p>
+                We specialize in providing elevator products for families
+                family, passenger elevator, car lift, cargo elevator goods,
+                elevators for villas, renovation houses… customer demand for
+                supply, installation of elevators and services relate to.{" "}
+              </p>
+
+              <p>
+                Provide genuine equipment{" "}
+                <a href={logoUytin}>Mitsubishi Elevator</a> (made in Japan),
+                Montanari (made in Italy), Fuji (made in Japan).{" "}
+                {/* <a href="https://thangmaymini.com/san-pham/">xem chi tiết</a>. */}
+              </p>
+
+              <figure class="wp-block-image alignnone wp-image-1782 size-full">
+                <img
+                  style={{ width: "933", height: "90", margin: '0 auto', display: 'block' }}
+                  // width="933"
+                  // height="90"
+                  src={logoUytin}
+                  data-src="https://thangmaymini.com/wp-content/uploads/2015/10/hang-thang-may.gif"
+                  alt="Công ty thang máy Gia Định 1"
+                  class="wp-image-1782 lazy"
+                />
+              </figure>
+
+              <p>
+                The products of ToangCSharp elevator company are all tested and
+                certified certificate and license by the Quality Assurance
+                Department of the Ministry of Labor Invalids and Social Affairs,
+                Vietnam Ministry of Construction.
+              </p>
+
+              <p>
+                <strong>Elevator motor:</strong>
+              </p>
+
+              <p>
+                We specialize in providing 3 types{" "}
+                <a href="https://thangmaymini.com/dong-co-thang-may-co-hop-va-khong-hop-co-phong-may-va-khong-phong-may.html">
+                  elevator motor
+                </a>
+                :{" "}
+                <a
+                  href="https://thangmaymini.com/thang-may-mitsubishi-gia-dinh"
+                  title="Mitsubishi"
+                >
+                  Mitsubishi
+                </a>{" "}
+                imported from Thailand, Montanari imported from Italy and Fuji
+                imported from Korea.{" "}
+              </p>
+
+              <p>
+                These are the companies that specialize in providing engines and
+                constantly updating elevator technology on the market today.
+                Each engine of Gia Dinh elevator company all have certificates
+                of origin Made CO&amp; CQ (Certificate of Origin and
+                Certifficate of Quality).
+              </p>
+
+              <figure class="wp-block-image alignnone">
+                <a href="https://thangmaymini.com/wp-content/uploads/2015/10/may-moc.jpg">
+                  <img
+                    style={{ width: "1024", height: "341",margin: '0 auto', display: 'block' }}
+                    // width="1024"
+                    // height="341"
+                    src="https://thangmaymini.com/wp-content/uploads/2015/10/may-moc-1024x341.jpg"
+                    data-src="https://thangmaymini.com/wp-content/uploads/2015/10/may-moc-1024x341.jpg"
+                    alt="Công ty thang máy gia định"
+                    class="wp-image-1347 lazy"
+                  />
+                </a>
+                <figcaption style={{textAlign: 'center'}}>
+                  Elevator motors with and without gear box
+                </figcaption>
+              </figure>
+
+              <p>
+                <strong>System of installation works</strong>
+              </p>
+
+              <p>
+                Installation works of Gia Dinh elevator company throughout the
+                provinces and cities nationwide: Hanoi, Ho Chi Minh City. Ho Chi
+                Minh City, Hung Yen, Hai Phong, Hai Duong, Lao Cai, Phu Tho, Son
+                La, Thai Nguyen, Quang Ninh, Binh Duong, Vung Tau, Long An, Dong
+                Nai… With the main focus on Thu Hanoi and Ho Chi Minh City.
+              </p>
+
+              <p>
+                <strong>
+                  The organizational structure of the enterprise management
+                  apparatus of the company machine ToangCSharp
+                </strong>
+              </p>
+
+              <p>
+                {" "}
+                <span
+                  //  style="font-size: 12pt; font-family: 'times new roman', times, serif;"
+                  style={{
+                    fontSize: "12pt",
+                    fontFamily: "times new roman",
+                    fontWeight: "bold",
+                  }}
+                >
+                  ToangCSharp Elevator Company is managed according to the
+                  following model
+                </span>
+              </p>
+
+              <div class="wp-block-image">
+                <figure class="aligncenter">
+                  <a href="https://thangmaymini.com/wp-content/uploads/2015/10/so-do-cong-ty.png">
+                    <img
+                    style={{margin: '0 auto', display: 'block'}}
+                      src="https://thangmaymini.com/wp-content/uploads/2015/10/so-do-cong-ty.png"
+                      data-src="https://thangmaymini.com/wp-content/uploads/2015/10/so-do-cong-ty.png"
+                      alt="sơ đồ cơ cấu quản lý công ty thang máy Gia Định"
+                      class="wp-image-1749 lazy"
+                    />
+                  </a>
+                  <figcaption style={{textAlign: 'center'}}>Management structure chart</figcaption>
+                </figure>
+              </div>
+
+              <p>
+                With a strict management system along with the spirit of
+                self-acceptance departmental operations. Technical team with
+                many years of experience along with a team of young enthusiastic
+                and enthusiastic employees job. We always meet the best
+                requirements of the owner private.
+              </p>
+
+              <p>
+                Are you a customer and you want to learn how? How to install the
+                best elevator at a reasonable price? best for your family. Give
+                us a call for a consultation free.{" "}
+              </p>
+
+              <p>
+                Gia Dinh Elevator Company always puts benefits and creates
+                comfort of customers when looking to the company comes first.
+                Because each company The program has a unique feature in terms
+                of function as well as space to use should use the choice of an
+                elevator with size, load and the most appropriate form is
+                paramount.{" "}
+              </p>
+
+              <p>
+                Giving the most accurate solution for each project is yours
+                Every customer is our duty because we know that Customers always
+                need the most practical information.
+              </p>
           </Row>
         </div>
 
@@ -101,16 +269,15 @@ const About = () => {
                 <h3>
                   Frequently Asked <strong>Questions</strong>
                 </h3>
-                {/* <p style={{fontSize: '16px'}}>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Duis aute irure dolor in reprehenderit
-                </p> */}
+                <p style={{ fontSize: "16px" }}>
+                  Answer all questions as well as frequently asked questions
+                  when customers come to buy our company's products
+                </p>
               </div>
               <Accordion
                 defaultActiveKey={["0"]}
                 alwaysOpen
-                style={{ margin: "20px" }}
+                style={{ marginLeft: "40px" }}
               >
                 <Accordion.Item eventKey="0">
                   <Accordion.Header>

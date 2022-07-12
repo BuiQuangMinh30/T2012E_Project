@@ -9,19 +9,20 @@ import { useHistory } from "react-router-dom";
 
 import "./css/Profile.css";
 import { ToastContainer, toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.min.css';
+import "react-toastify/dist/ReactToastify.min.css";
+import OrderSuccess from "../components/OrderSuccess";
+import ProcessOrder from "../components/ProcessOrder";
 
 const Profile = (props) => {
   // console.log("props", props);
   const api = `https://elevatorsystemdashboard.azurewebsites.net/api/Profile`;
   const [profile, setProfile] = useState({});
   const [orders, setOrders] = useState([]);
-  const [order, setOrder] = useState({});
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [address1, setAddress1] = useState("");
-  // const [state, setState] = useState("");
+  const [address2, setAddress2] = useState("");
   const [error, setError] = useState(null);
   const [file, setFile] = useState();
   const [update, setUpdate] = useState(null);
@@ -63,31 +64,8 @@ const Profile = (props) => {
             },
           }
         );
-        // console.log('resstda', resData);
+        //
         setOrders(resData.data);
-      }
-    }
-
-    fetchMyAPI();
-  }, []);
-
-  useEffect(() => {
-    async function fetchMyAPI() {
-      var getToken = JSON.parse(localStorage.getItem("dataUser"));
-
-      if (!getToken) {
-        history.push("/login");
-      } else {
-        const getToken1 = getToken.access_token;
-        let resData = await axios.get(
-          "https://elevatorsystemdashboard.azurewebsites.net/api/Orders/43",
-          {
-            headers: {
-              Authorization: `Bearer ${getToken1}`,
-            },
-          }
-        );
-        setOrder(resData.data);
       }
     }
 
@@ -121,10 +99,21 @@ const Profile = (props) => {
     if (!validateEmail(email)) {
       setError("Invalid Email");
     }
-    if (!username && !email && !phone && !address1) {
-      toast.error("Lỗi rồi, phải nhập đúng email", {
+    // if (username.length<3 && !email && !phone && !address1) {
+    //   toast.error("Lỗi rồi, phải nhập đầy đủ trường", {
+    //     position: "top-right",
+    //     autoClose: 2000,
+    //     hideProgressBar: false,
+    //     closeOnClick: true,
+    //     pauseOnHover: true,
+    //     draggable: true,
+    //     progress: undefined,
+    //   });
+    // }
+    if (!state.selectedWard) {
+      toast.error("Lỗi rồi, chưa chọn tỉnh thành", {
         position: "top-right",
-        autoClose: 5000,
+        autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -132,7 +121,34 @@ const Profile = (props) => {
         progress: undefined,
       });
     }
-    if (!error) {
+    if (!state.selectedDistrict) {
+      toast.error("Lỗi rồi, chưa chọn quận huyện", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+    if (!state.selectedCity) {
+      toast.error("Lỗi rồi, chưa chọn phường xã", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+    if (
+      !error &&
+      state.selectedWard &&
+      state.selectedDistrict &&
+      state.selectedCity
+    ) {
       var getToken = JSON.parse(localStorage.getItem("dataUser"));
       setUpdate("done");
       const getToken1 = getToken.access_token;
@@ -152,14 +168,15 @@ const Profile = (props) => {
           Country: state.selectedWard.label ? state.selectedWard.label : "",
           PhoneNumber: phone ? phone : profile.PhoneNumber,
           AddressLine1: address1 ? address1 : profile.AddressLine1,
-          AddressLine2: file,
+          AddressLine2: address2 ? address2 : profile.AddressLine2,
         }),
       };
       fetch(
         `https://elevatorsystemdashboard.azurewebsites.net/api/updateProfile`,
         requestOptions
-      ).then((response) => response.json());
-      window.location.reload();
+      )
+        .then((response) => response.json())
+        .then((result) => window.location.reload());
     }
   };
 
@@ -172,35 +189,50 @@ const Profile = (props) => {
     day: "numeric",
   };
 
+  const updateImage_v1 = async (files) => {
+    const formData = new FormData();
+    formData.append("file", files[0]);
+    formData.append("upload_preset", "vv4qodou");
+    // console.log(files)
+    try {
+      var dataImage = await axios.post(
+        "https://api.cloudinary.com/v1_1/hoanganhauth0901/image/upload",
+        formData
+      );
+      // console.log('dataImage', dataImage)
+      setAddress2(dataImage.data.url);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+
   return (
     <>
       <Container className="container emp-profile">
-        {/* <ToastContainer
-            position="top-right"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-          />
-          <ToastContainer /> */}
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
+        <ToastContainer />
         <Row>
           <Col sm={4}>
             <div className="profile-img">
               <img
                 src={
-                  // profile.AddressLine2
-                  //   ? profile.AddressLine2
-                  //   :
-                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog"
+                  profile && profile.AddressLine2 ? profile.AddressLine2 : ""
                 }
                 alt=""
               />
             </div>
-            <div className="profile-work">
+            {/* <div className="profile-work">
               <p>ORDER SUCCESS</p>
               {orders.map((item, index) => {
                 return (
@@ -210,7 +242,7 @@ const Profile = (props) => {
                   </>
                 );
               })}
-            </div>
+            </div> */}
           </Col>
           <Col sm={8}>
             <div className="profile-head">
@@ -258,14 +290,7 @@ const Profile = (props) => {
                         <h6>{profile.AddressLine1}</h6>
                       </div>
                     </div>
-                    <div className="row">
-                      <div className="col-md-6">
-                        <label>Order</label>
-                      </div>
-                      <div className="col-md-6">
-                        <h6>{orders.length}</h6>
-                      </div>
-                    </div>
+                   
                   </div>
                 </Tab>
                 <Tab eventKey="edit-profile" title="Edit Profile">
@@ -312,12 +337,18 @@ const Profile = (props) => {
                                 <label className="labels">Choose Image</label>
                                 <input
                                   type="file"
-                                  className="form-control"
-                                  onChange={handleChange}
+                                  name="avatar"
+                                  onChange={(e) =>
+                                    updateImage_v1(e.target.files)
+                                  }
                                 />
                               </div>
                               <div className="col-md-5">
-                                <img src={file ? file : profile.AddressLine2} />
+                                <img
+                                  src={
+                                    address2 ? address2 : profile.AddressLine2
+                                  }
+                                />
                               </div>
                             </div>
                           </div>
@@ -391,109 +422,31 @@ const Profile = (props) => {
                     role="tabpanel"
                     aria-labelledby="shipping-tab"
                   >
-                    <div class="card1">
-                      <div class="title">Purchase Reciept</div>
-                      <div class="info">
-                        <div class="row">
-                          <div class="col-7">
-                            <span id="heading">Date</span>
-                            <br />
-                            <span id="details">
-                              {order && order.order
-                                ? order.order.map((item, index) => {
-                                    return (
-                                      <>
-                                        {new Date(
-                                          item.CreatedAt
-                                        ).toLocaleDateString()}
-                                      </>
-                                    );
-                                  })
-                                : ""}
-                            </span>
-                          </div>
-                          <div class="col-5 pull-right">
-                            <span id="heading">Order No.</span>
-                            <br />
-                            <span id="details">
-                              {order && order.order
-                                ? order.order.map((item, index) => {
-                                    return <>{item.SKU}</>;
-                                  })
-                                : ""}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="pricing">
-                        <div class="row">
-                          {order && order.dataOrder ? (
-                            order.dataOrder.map((item, index) => {
-                              return (
-                                <>
-                                  <div class="col-6">
-                                    <span id="name">{item.Elevator.Name}</span>
-                                  </div>
-                                  <div class="col-3">
-                                    <span id="price">
-                                      {item.Elevator.Price} $
-                                    </span>
-                                  </div>
-                                  <div class="col-3">
-                                    <span id="price">
-                                      {item.Quantity} (Quantity)
-                                    </span>
-                                  </div>
-                                </>
-                              );
-                            })
-                          ) : (
-                            <>
-                              <div>Rỗng</div>
-                            </>
-                          )}
-                        </div>
-                        <div class="row">
-                          <div class="col-9">
-                            <span id="name">Shipping</span>
-                          </div>
-                          <div class="col-3">
-                            <span id="price">Free</span>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="total">
-                        <div class="row">
-                          <div class="col-9"></div>
-                          <div class="col-3">
-                            <big>
-                              {order && order.order
-                                ? order.order.map((item, index) => {
-                                    return <>{item.Total}</>;
-                                  })
-                                : ""}
-                            </big>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="tracking">
-                        <div class="title">Tracking Order</div>
-                      </div>
-                      <div class="progress-track">
-                        <ul id="progressbar">
-                          <li class="step0 active " id="step1">
-                            Ordered
-                          </li>
-                          <li class="step0 active text-center" id="step2">
-                            Shipped
-                          </li>
-                          <li class="step0 active text-right" id="step3">
-                            On the way
-                          </li>
-                          <li class="step0 text-right" id="step4">
-                            Delivered
-                          </li>
-                        </ul>
+                     {orders.map((item, index) => {
+                          if ( item.OrderStatus ==1) {
+                            return <ProcessOrder Id={item.Id} />;
+                          }
+                        })}
+                    {/* {orders.map((item, index) => {
+                      return <ProcessOrder orders={item.Id} />;
+                    })} */}
+                  </div>
+                </Tab>
+                <Tab eventKey="orders" title="Orders Success">
+                  <div
+                    className="tab-pane fade show active"
+                    id="orders"
+                    role="tabpanel"
+                    aria-labelledby="orders-tab"
+                  >
+                    <div className="container">
+                      <div className="row">
+                        {orders.map((item, index) => {
+                          // console.log('item', item);
+                          if (item.OrderStatus == 2) {
+                            return <OrderSuccess Id={item.Id} />;
+                          }
+                        })}
                       </div>
                     </div>
                   </div>

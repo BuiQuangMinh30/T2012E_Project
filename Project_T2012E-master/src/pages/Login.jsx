@@ -8,9 +8,13 @@ import { Form, Button } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.min.css';
+
 const Login = (props) => {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const [confimPassword, setConfirmPassword] = useState("");
   const [email, setEmail] = useState("");
   const [errorEmail, setErrorEmail] = useState(null);
   const [errorName, setErrorName] = useState(null);
@@ -30,9 +34,6 @@ const Login = (props) => {
     setErrorPassword(null);
   };
 
-  // useEffect(()=>{
-  //   localStorage.removeItem("dataUser");
-  // },[])
 
   const validateEmail = (email) => {
     const re =
@@ -57,17 +58,26 @@ const Login = (props) => {
       axios
         .post(`${apiUrl}/Login`, data)
         .then((result) => {
-          console.log("result", result);
           const serializedState = JSON.stringify(result.data);
           var dataUser = localStorage.setItem("dataUser", serializedState);
-          console.log("dataUser", dataUser);
-          if (result.status === 200) history.push("/");
+          if (result.status === 200)  {
+            history.push("/") 
+            window.location.reload()
+          }
           // if( result.)
           else alert("Invalid User");
         })
         .catch((err) => {
           if (err.response.status === 500)
-            alert("Tài khoản mật khẩu không chính xác");
+          toast.warning("Account password is incorrect", {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
         });
     }
   };
@@ -75,13 +85,60 @@ const Login = (props) => {
   const handleSubmitRegister = async (e) => {
     e.preventDefault();
     if (!validateEmail(email)) {
-      setErrorEmail("Invalid Email");
+      // setErrorEmail("Invalid Email");
+      toast.error("Email is not valid", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }else{
+      setErrorEmail(null);
     }
     if (name.length < 3) {
-      setErrorName("Invalid Name");
+      // setErrorName("Invalid Name");
+      toast.error("Name length must be at least 3 characters", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }else{
+      setErrorName(null);
     }
+    
     if (password.length < 8) {
-      setErrorPassword("Invalid Password");
+      // setErrorPassword("Invalid Password");
+      toast.error("Password must be at least 8 characters", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }else{
+      setErrorPassword(null);
+      if(password === confimPassword){
+        setErrorPassword(null);
+      }else{
+        toast.error("Confirm password is not matched", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
     }
     if (name.length > 3 && password.length > 7) {
       setErrorEmail(null);
@@ -92,9 +149,26 @@ const Login = (props) => {
         // console.log('result', result)
         if (result.status == 200) {
           history.push("/login");
+          toast.success("Create Account Success", {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
           window.location.reload();
         } else {
-          alert("Invalid information");
+          toast.error("Error, create an account again", {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
         }
       });
     }
@@ -103,6 +177,18 @@ const Login = (props) => {
   return (
     <>
       <div className="body-container">
+      <ToastContainer
+            position="top-right"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
+          <ToastContainer />
         <div
           className={`container12 ${isSignUp ? " right-panel-active" : ""}`}
           id="container"
@@ -110,18 +196,7 @@ const Login = (props) => {
           <div className="form-container sign-up-container">
             <form>
               <h1>Create Account</h1>
-              <div className="social-container">
-                <a href="#" className="social">
-                  <i className="fab fa-facebook-f"></i>
-                </a>
-                <a href="#" className="social">
-                  <i className="fab fa-google-plus-g"></i>
-                </a>
-                <a href="#" className="social">
-                  <i className="fab fa-linkedin-in"></i>
-                </a>
-              </div>
-              <span>or use your email for registration</span>
+              
               <input
                 type="text"
                 placeholder="Name"
@@ -140,24 +215,19 @@ const Login = (props) => {
                 onChange={(e) => setPassword(e.target.value)}
               />
               <p style={{ color: "red" }}>{errorPasword}</p>
+              <input
+                type="password"
+                placeholder="Confirm Password"
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+              <p style={{ color: "red" }}>{errorPasword}</p>
               <button onClick={handleSubmitRegister}>Sign Up</button>
             </form>
           </div>
           <div className="form-container sign-in-container">
             <form>
               <h1>Sign in</h1>
-              <div className="social-container">
-                <a href="#" className="social">
-                  <i className="fab fa-facebook-f"></i>
-                </a>
-                <a href="#" className="social">
-                  <i className="fab fa-google-plus-g"></i>
-                </a>
-                <a href="#" className="social">
-                  <i className="fab fa-linkedin-in"></i>
-                </a>
-              </div>
-              <span>or use your account</span>
+              
               <input
                 type="text"
                 placeholder="Username"
@@ -171,7 +241,7 @@ const Login = (props) => {
                 onChange={(e) => setPassword(e.target.value)}
               />
               <p style={{ color: "red" }}>{errorPasword}</p>
-              <a href="#">Forgot your password?</a>
+              {/* <a href="#">Forgot your password?</a> */}
               <button onClick={onSubmit}>Sign In</button>
             </form>
           </div>

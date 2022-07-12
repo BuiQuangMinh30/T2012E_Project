@@ -14,7 +14,6 @@ const initalState = {
 };
 
 const OrderInformation = ({ total }) => {
-  // const {lgShow} = props;
   const [lgShow, setLgShow] = useState(false);
   const [order, setOrder] = useState(initalState);
   const { FullName, PhoneNumber, Address, Description, OrderEmail } = order;
@@ -27,7 +26,8 @@ const OrderInformation = ({ total }) => {
       var getToken = JSON.parse(localStorage.getItem("dataUser"));
 
       if (!getToken) {
-        history.push("/login");
+        // history.push("/login");
+        console.log('not get data usser')
       } else {
         let resData = await axios.get("https://elevatorsystemdashboard.azurewebsites.net/api/Profile", {
           headers: {
@@ -50,11 +50,11 @@ const OrderInformation = ({ total }) => {
     try {
       const data = await axios.post("https://elevatorsystemdashboard.azurewebsites.net/api/Orders", {
         Total: total,
-        FullName: order.FullName,
-        PhoneNumber: order.PhoneNumber,
-        Description: order.Description,
-        Address: order.Address,
-        OrderEmail: order.OrderEmail,
+        FullName: order.FullName ? order.FullName : profile.UserName,
+        PhoneNumber: order.PhoneNumber ? order.PhoneNumber : profile.PhoneNumber,
+        Description: order.Description ,
+        Address: order.Address ? order.Address :profile.AddressLine1,
+        OrderEmail: order.OrderEmail ? order.OrderEmail : profile.Email,
         OrderStatus: 0,
         ShipStatus: 0
       },
@@ -73,7 +73,7 @@ const OrderInformation = ({ total }) => {
   
   return (
     <>
-      <Button onClick={() => setLgShow(true)}>đặt hàng</Button>
+      <Button style={{maxHeight:'30px'}} onClick={() => setLgShow(true)}>order</Button>
       <Modal
         size="lg"
         show={lgShow}
@@ -156,7 +156,7 @@ const OrderInformation = ({ total }) => {
                     />
                   </div>
                 </div>
-                <div className="mt-5 text-center">
+                {/* <div className="mt-5 text-center">
                   <button
                     className="btn btn-primary profile-button"
                     type="button"
@@ -164,13 +164,20 @@ const OrderInformation = ({ total }) => {
                   >
                     Save Information
                   </button>
-                </div>
+                </div> */}
               </div>
             </Col>
           </Row>
         </Modal.Body>
         <Modal.Footer>
-          <button className="btn btn-primary profile-button" onClick={() => setLgShow(false)}>Close</button>
+        <button
+                    className="btn btn-primary profile-button"
+                    type="button"
+                    onClick={handleSubmitOrder}
+                  >
+                    Save
+                  </button>
+                {/* </div> */}
         </Modal.Footer>
       </Modal>
     </>

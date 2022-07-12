@@ -40,6 +40,14 @@
         img {
             height: 70px;
         }
+        @include tablet {
+            height: 50px;
+        }
+        @include mobile {
+            img {
+                height: 30px;
+            }
+        }
     }
 
     &__menu {

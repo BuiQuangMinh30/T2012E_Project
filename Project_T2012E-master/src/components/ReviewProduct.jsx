@@ -6,6 +6,11 @@ import { createComment } from "../redux/comment-product/commentProductSlice";
 import { set } from "../redux/product-modal/productModalSlice";
 
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.min.css';
+import { Add } from "@mui/icons-material";
+import { cssNumber } from "jquery";
+
 
 const colors = {
   orange: "#FFBA5A",
@@ -13,13 +18,39 @@ const colors = {
 };
 
 const ReviewProduct = (props) => {
-  // console.log('review product', props.dataReview.match.params.slug)
   const ElevatorId = props.dataReview.match.params.slug;
   const [currentValue, setCurrentValue] = useState(0);
   const [hoverValue, setHoverValue] = useState(undefined);
   const [commentFeedback, setComment] = useState("");
   const [profile, setProfile] = useState({});
   var getToken = JSON.parse(localStorage.getItem("dataUser"));
+
+
+  useEffect(() => {
+    async function fetchMyAPI() {
+      var getToken = JSON.parse(localStorage.getItem("dataUser"));
+      if(getToken){
+        const getToken1 = getToken.access_token;
+        let resData = await axios.get(
+          "https://elevatorsystemdashboard.azurewebsites.net/api/Profile",
+          {
+            headers: {
+              Authorization: `Bearer ${getToken1}`,
+            },
+          }
+        );
+        // console.log('resstda', resData);
+         setProfile(resData.data.data);
+      }
+        else{
+          console.log('1')
+        }
+      
+    }
+
+    fetchMyAPI();
+  }, []);
+  // console.log('profile', profile);
 
   const dateNow = new Date();
 
@@ -40,43 +71,74 @@ const ReviewProduct = (props) => {
     setHoverValue(undefined);
   };
 
-  // console.log('comment', commentFeedback)
   const infoComment = {
     Description: commentFeedback,
     SatisfyingLevel: currentValue,
     ElevatorID: ElevatorId,
     Problem: dateNow,
-    Improvement: "https://haycafe.vn/wp-content/uploads/2022/03/avatar-facebook-doc.jpg"
+    Improvement: profile.AddressLine2,
   };
   
   const submitData = async (e) => {
-    
-  const getToken1 = getToken.access_token;
-    e.preventDefault();
-    axios
-      .post(urlFeedback, infoComment, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${getToken1}`,
-        },
-      })
-      .then((result) => {
-        // console.log('result', result);
-        if (result.status == 200) {
-          setComment("");
-          setHoverValue(undefined);
-          setCurrentValue(0);
-          alert("Comment thành công");
-        }
-        else alert("Invalid User");
+    if(commentFeedback.length <= 0 && currentValue <= 0){
+      toast.error("Error, Did not enter message and rating", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
       });
-    
+    }else{
+      const getToken1 = getToken.access_token;
+      e.preventDefault();
+      axios
+        .post(urlFeedback, infoComment, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken1}`,
+          },
+        })
+        .then((result) => {
+          // console.log('result', result);
+          if (result.status == 200) {
+            setComment("");
+            setHoverValue(undefined);
+            setCurrentValue(0);
+            toast.success("Comment created successfully", {
+              position: "top-right",
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            });
+          }
+          else alert("Invalid User");
+        });
+      
+    }
+ 
   };
 
   return (
     <>
       <div className="col-lg-4 col-md-6 col-sm-4col-12 mt-4">
         {/* <form> */}
+        <ToastContainer
+            position="top-right"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
+          <ToastContainer />
         {getToken && getToken ? 
          <>
          <div className="form-group">
@@ -132,7 +194,7 @@ const ReviewProduct = (props) => {
          </>
          :
          <>
-          <h5>Bạn phải login mới feedback được</h5>
+          <h5>You must be <a href="/login" style={{color: 'red !important'}}>logged</a> in to give feedback</h5>
           {/* <button></button> */}
          </>
       }

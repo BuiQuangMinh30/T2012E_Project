@@ -14,7 +14,7 @@ const ListComment = (props) => {
   };
 
   useEffect(() => {
-    // setInterval(() => {
+    setInterval(() => {
     const fetchData = async () => {
       const data = await axios.get(
         `https://elevatorsystemdashboard.azurewebsites.net/api/GetFeedbackByElevatorID/${commentProductId}`
@@ -26,7 +26,7 @@ const ListComment = (props) => {
       }
     };
     fetchData();
-    // }, 3000);
+    }, 3000);
   }, []);
   //  console.log('comments', comments)
 
@@ -38,7 +38,7 @@ const ListComment = (props) => {
         <h4>{comments.length} Comments</h4>
         {comments.length <= 0 ? (
           <>
-            <p>Không có comment nào</p>
+            <p>There are no comments yet</p>
           </>
         ) : (
           <>

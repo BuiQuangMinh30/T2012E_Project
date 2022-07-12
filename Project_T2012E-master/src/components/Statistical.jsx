@@ -66,7 +66,7 @@ const Statistical = () => {
                 <div class="col-lg-6 mb-5">
                     <small class=" text-white text-uppercase font-weight-bold px-1" style={{backgroundColor:'#4267b2'}}>Why Choose Us</small>
                     <h2 class="mt-2 mb-3" style={{fontSize: '40px', fontWeight: '800'}}>15 Years Expereince</h2>
-                    <h4 class="font-weight-normal text-muted mb-4">Experienced many projects, installation experience</h4>
+                    <h4 class="font-weight-normal text-muted mb-4">Experienced many projects, installation experience. Display information about existing products, projects and users accurately</h4>
                     {/* <div class="list-inline mb-4">
                         <p class="font-weight-semi-bold mb-2"><i class="fa fa-angle-right mr-2"></i>Lorem ut kasd dolores elitr</p>
                         <p class="font-weight-semi-bold mb-2"><i class="fa fa-angle-right mr-2"></i>Jsto dolor lorem ipsum</p>

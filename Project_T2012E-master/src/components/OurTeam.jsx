@@ -12,7 +12,7 @@ const OurTeam = () => {
 		<div class="row">
 			<div class="col-sm-6 offset-sm-3 mt-4 mb-4">
 				<h2 class="text-center" style={{color:'#4267b2'}}>Our Expert Team</h2>
-				<p class="text-center">Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
+				<p class="text-center">Members of the management and executive board of the company</p>
 			</div>
 		</div>
 
@@ -22,10 +22,10 @@ const OurTeam = () => {
 					<div class="user-pic">
 						<img src={imgs[0]} class="img-fluid" alt="User Pic"/>
 					</div>
-					<h4>Rajnish Kumar</h4>
-					<h6>Web Designer</h6>
+					<h4>Viet Hoang</h4>
+					<h6>Leader</h6>
 					<hr/>
-					<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
+					<p>Do product management, order, project. Make admin management interface</p>
 					<hr/>
 					<a href="#" class="btn" style={{backgroundColor:'#4267b2', color:'#fff' }}>Know More</a>
 				</div>
@@ -36,10 +36,10 @@ const OurTeam = () => {
 					<div class="user-pic">
 						<img src={imgs[1]} class="img-fluid" alt="User Pic"/>
 					</div>
-					<h4>Satyam Tiwari</h4>
-					<h6>Web Developer</h6>
+					<h4>Van Anh</h4>
+					<h6>VIP Member</h6>
 					<hr/>
-					<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+					<p>Call api, system analysis, database processing, sheet data, data statistics</p>
 					<hr/>
 					<a href="#" class="btn" style={{backgroundColor:'#4267b2', color:'#fff' }}>Know More</a>
 				</div>
@@ -50,10 +50,11 @@ const OurTeam = () => {
 					<div class="user-pic">
 						<img src={imgs[2]} class="img-fluid" alt="User Pic"/>
 					</div>
-					<h4>Salim Malik</h4>
-					<h6>Front End Developer</h6>
+					<h4>Quang Minh</h4>
+					<h6>Member</h6>
 					<hr/>
-					<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+					<p>
+					Call api, user interface design, database analysis, problem solving, error handling</p>
 					<hr/>
 					<a href="#" class="btn" style={{backgroundColor:'#4267b2', color:'#fff' }}>Know More</a>
 				</div>

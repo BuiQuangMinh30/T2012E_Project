@@ -37,19 +37,26 @@ const AboutUs = () => {
                       elevators.
                     </p>
                     {/* < */}
-                    <a href="" class="btn py-md-2 px-md-4 font-weight-semi-bold"  style={{backgroundColor:'#4267b2'}}>Discover More</a>         
+                    <a
+                      href="/about"
+                      class="btn py-md-2 px-md-4 font-weight-semi-bold"
+                      style={{ backgroundColor: "#4267b2" }}
+                    >
+                      Discover More
+                    </a>
                   </div>
                 </Col>
                 <Col sm={6} className="d-flex align-items-stretch">
                   <iframe
                     width="100%"
-                    height="350"
-                    src="https://www.youtube.com/embed/nLoooehLCjs"
+                    height="400"
+                    src="https://www.youtube.com/embed/Rc5dtqQweHI"
                     title="YouTube video player"
                     frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen
                   ></iframe>
+                 
                 </Col>
               </Row>
             </div>

@@ -11,7 +11,6 @@ import ProductView from '../components/ProductView'
 
 import productData from '../assets/fake-data/products'
 import ReviewProduct from '../components/ReviewProduct'
-import ListReview from '../components/ListReview'
 import ListComment from '../components/ListComment'
 
 
@@ -40,9 +39,7 @@ const Product = props => {
                 </SectionBody>
             </Section>
             <Section>
-                <SectionTitle>
-                    Khám phá thêm
-                </SectionTitle>
+               
                 <SectionBody>
                     {/* <Grid
                         col={4}

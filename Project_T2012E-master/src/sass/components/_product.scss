@@ -74,6 +74,7 @@
 
             &__list {
                 @include flex(center, flex-start);
+                font-size: 16px;
 
                 &__item {
                     @include flex(center, center);

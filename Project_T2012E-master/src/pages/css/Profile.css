@@ -3,10 +3,10 @@
      margin: auto;
      width: 100%;
      max-width:600px;
-     padding: 4vh 0;
+     padding: 1vh 0;
      box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
      border-top: 3px solid rgb(42, 117, 231);
-     border-bottom: 3px solid rgb(42, 117, 231);
+     /* border-bottom: 3px solid rgb(42, 117, 231); */
      border-left: none;
      border-right: none;
  }
@@ -18,7 +18,7 @@
  .title{
      color: rgb(42, 117, 231);
      font-weight: 600;
-     margin-bottom: 2vh;
+     /* margin-bottom: 2vh; */
      padding: 0 8%;
      font-size: initial;
  }
@@ -64,7 +64,7 @@
  #progressbar li {
      list-style-type: none;
      font-size: x-small;
-     width: 25%;
+     width: 33.333%;
      float: left;
      position: relative;
      font-weight: 400;
@@ -85,7 +85,7 @@
      color: #fff;
      width: 5px;
      height: 5px;
-     margin-left: 32%;
+     /* margin-left: 4%; */
  }
  
  #progressbar #step3:before {
@@ -93,18 +93,11 @@
      color: #fff;
      width: 5px;
      height: 5px;
-     margin-right: 32% ; 
+     margin-left: 97% ; 
      /* padding-right: 11px !important */
  }
  
- #progressbar #step4:before {
-     content: "";
-     color: #fff;
-     width: 5px;
-     height: 5px;
-     margin-right: 0px !important;
-     /* padding-right: 11px !important */
- }
+
  
  #progressbar li:before {
      line-height: 29px;
@@ -132,7 +125,7 @@
      padding: 0 8%;
  }
  #progressbar li:nth-child(2):after {
-     margin-right: auto;
+    width: 50%;
  }
  
  #progressbar li:nth-child(1):after {
@@ -141,12 +134,10 @@
  
  #progressbar li:nth-child(3):after {
      float: left;
-     width: 68%;
+     margin-left: -50%;
+     width: 152%;
  }
- #progressbar li:nth-child(4):after {
-     margin-left: auto;
-     width: 132%;
- }
+
  
  #progressbar  li.active{
      color: black;
@@ -155,4 +146,8 @@
  #progressbar li.active:before,
  #progressbar li.active:after {
      background: rgb(42, 117, 231);
+ }
+
+ .order-success{
+    float: right;
  }

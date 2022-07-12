@@ -20,8 +20,6 @@ import OurTeam from '../components/OurTeam'
 import OurServices from '../components/OurServices'
 import Statistical from '../components/Statistical'
 import Blog from '../components/Blog'
-// import Product from './Product'
-import Product1 from '../components/ListProduct'
 
 // import Images from '../assets/fake-data/images'
 
@@ -30,7 +28,6 @@ const Home = () => {
     return (
         <Helmet title="Trang chủ">
             <HeroSlider images={Images} />
-            {/* policy section */}
             <Section >
                 <SectionBody>
                     <Grid
