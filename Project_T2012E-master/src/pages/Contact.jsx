@@ -63,7 +63,7 @@ const Contact = () => {
                         </Col>
                        
                         <Col sm={12}>
-                          <Form.Label>Example textarea</Form.Label>
+                          <Form.Label>Contact</Form.Label>
                           <Form.Control as="textarea" rows={2} placeholder="Contact"/>
                         </Col>
                         <Col sm={12} className="mt-3">

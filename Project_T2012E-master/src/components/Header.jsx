@@ -60,9 +60,9 @@ const Header = (props) => {
   return (
     <div className="header shrink" ref={headerRef}>
       <div className="container">
-        <div className="header__logo" style={{cursor: 'pointer'}}>
+        <div className="header__logo" >
           <Link to="/">
-            <img src={logo} alt="" />
+            <img src={logo} alt="" style={{cursor: 'pointer'}}/>
           </Link>
         </div>
         <div className="header__menu">

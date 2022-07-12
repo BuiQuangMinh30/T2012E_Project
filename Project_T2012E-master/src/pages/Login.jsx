@@ -45,10 +45,28 @@ const Login = (props) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (name.length < 3) {
-      setErrorName("Invalid Name");
+      // setErrorName("Invalid Name");
+      toast.error("Name length must be at least 3 characters", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
     if (password.length < 7) {
-      setErrorPassword("Invalid Password");
+      // setErrorPassword("Invalid Password");
+      toast.error("Password must be at least 8 characters", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
 
     if (name.length > 3 && password.length > 7) {
