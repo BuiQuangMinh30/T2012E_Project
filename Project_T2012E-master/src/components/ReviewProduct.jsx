@@ -23,6 +23,7 @@ const ReviewProduct = (props) => {
   const [hoverValue, setHoverValue] = useState(undefined);
   const [commentFeedback, setComment] = useState("");
   const [profile, setProfile] = useState({});
+  const [orders, setOrders] = useState({});
   var getToken = JSON.parse(localStorage.getItem("dataUser"));
 
 
@@ -50,12 +51,48 @@ const ReviewProduct = (props) => {
 
     fetchMyAPI();
   }, []);
-  // console.log('profile', profile);
+  
 
+  useEffect(() => {
+    async function fetchMyAPI() {
+      var getToken = JSON.parse(localStorage.getItem("dataUser"));
+        const getToken1 = getToken.access_token;
+        let resData = await axios.get(
+          "https://elevatorsystemdashboard.azurewebsites.net/api/getOrderByIdUser",
+          {
+            headers: {
+              Authorization: `Bearer ${getToken1}`,
+            },
+          }
+        );
+        //
+        setOrders(resData.data);
+    }
+
+    fetchMyAPI();
+  }, []);
+  const [order, setOrder] = useState({});
+  useEffect(() => {
+    async function fetchMyAPI() {
+      var getToken = JSON.parse(localStorage.getItem("dataUser"));
+      const getToken1 = getToken.access_token;
+      let resData = await axios.get(
+        `https://elevatorsystemdashboard.azurewebsites.net/api/Orders/60`,
+        {
+          headers: {
+            Authorization: `Bearer ${getToken1}`,
+          },
+        }
+      );
+      setOrder(resData.data);
+    }
+    fetchMyAPI();
+  }, []);
+
+  console.log('response', order)
   const dateNow = new Date();
 
   const stars = Array(5).fill(0);
-  const dispatch = useDispatch();
   const urlFeedback =
     "https://elevatorsystemdashboard.azurewebsites.net/api/Feedbacks";
 
@@ -151,7 +188,6 @@ const ReviewProduct = (props) => {
              msg
              cols="30"
              rows="5"
-             // className="form-control"
              value={commentFeedback}
              onChange={(e) => setComment(e.target.value)}
            ></textarea>

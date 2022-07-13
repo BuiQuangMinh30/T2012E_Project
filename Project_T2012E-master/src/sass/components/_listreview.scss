@@ -64,13 +64,14 @@
   }
   
   .comment{
-    border: 1px solid rgb(195 210 210);
+    // border: 1px solid rgb(195 210 210);
     float: left;
     border-radius: 5px;
     padding-left: 40px;
     padding-right: 30px;
     padding-top: 10px;
     width: 100%;
+     box-shadow: 2px 2px 2px 2px rgb(195 210 210);;
     
   }
   .comment h4,.comment span,.darker h4,.darker span{

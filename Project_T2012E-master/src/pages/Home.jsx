@@ -26,7 +26,7 @@ import Blog from '../components/Blog'
 const Home = () => {
     // const bannerElevator = "http://www.wvtelevators.com/wp-content/uploads/2016/07/panaromic-elevator-banner.jpg"
     return (
-        <Helmet title="Trang chủ">
+        <Helmet title="Home">
             <HeroSlider images={Images} />
             <Section >
                 <SectionBody>

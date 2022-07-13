@@ -24,7 +24,6 @@ const Blog = () => {
     };
     fetchData();
   }, []);
-  console.log("blogs", blogs);
   return (
     <>
       <div className="container-fluid pt-5">

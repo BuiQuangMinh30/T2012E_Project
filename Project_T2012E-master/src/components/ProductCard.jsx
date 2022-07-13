@@ -34,7 +34,8 @@ const ProductCard = props => {
 
                 <h3 className="product-card__name">{props.name}</h3>
                 <div className="product-card__price">
-                    {props.price} $
+                    {new Intl.NumberFormat('de-DE').format(props.price)} $
+                    {/* {props.price} $ */}
                 </div>
             </Link>
             <div className="product-card__btn">

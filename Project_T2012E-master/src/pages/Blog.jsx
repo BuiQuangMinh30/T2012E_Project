@@ -22,6 +22,7 @@ const Blog = (props) => {
   const [offset, setOffset] = useState(1);
   const [posts, setAllPosts] = useState([]);
   const [pageCount, setPageCount] = useState(0);
+  
   useEffect(() => {
     // setTimeout(()=>{
       async function callAPI() {

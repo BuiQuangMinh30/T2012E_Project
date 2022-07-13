@@ -158,7 +158,7 @@ const Login = (props) => {
         });
       }
     }
-    if (name.length > 3 && password.length > 7) {
+    if (name.length > 3 && password.length > 7 && confimPassword.length >7 && confimPassword === password) {
       setErrorEmail(null);
       setErrorName(null);
       setErrorPassword(null);

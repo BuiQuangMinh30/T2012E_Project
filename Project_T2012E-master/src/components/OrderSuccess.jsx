@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Button from "../components/Button";
+import Complaint from './Complaint';
 function OrderSuccess(props) {
   const { Id } = props;
   const [order, setOrder] = useState({});
@@ -108,32 +110,10 @@ function OrderSuccess(props) {
                 </div>
               </div>
             </div>
-            <div className="tracking">
-              <div className="title">Tracking Order</div>
-            </div>
-            <div className="progress-track">
-              <ul id="progressbar">
-                <li className="step0 active " id="step1">
-                  Ordered
-                </li>
-                <li className="step0 active text-center" id="step2">
-                  Shipped
-                </li>
-                <li className={order && order.order
-                      ? order.order.map((item, index) => {
-                          if(item.OrderStatus === 2){
-                              return (
-                                   "step0 active text-right"
-                                 );
-                          }
-                        })
-                      : "step0 text-right"
-                      } id="step3">
-                  <p className="order-success">Delivered</p>
-                </li>
-               
-              </ul>
-            </div>
+            <Button size="block">
+                <Complaint IdOrder={Id}/>
+              </Button>
+            
           </div>
      //    })
      : ""

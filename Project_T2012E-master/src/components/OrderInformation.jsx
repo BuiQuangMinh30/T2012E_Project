@@ -73,7 +73,8 @@ const OrderInformation = ({ total }) => {
   
   return (
     <>
-      <Button style={{maxHeight:'30px'}} onClick={() => setLgShow(true)}>order</Button>
+      <Button style={{maxHeight:'30px'}} onClick={() => setLgShow(true)}>
+enter information</Button>
       <Modal
         size="lg"
         show={lgShow}
@@ -94,7 +95,7 @@ const OrderInformation = ({ total }) => {
                 </div>
                 <div className="row">
                   <div className="col-md-6">
-                    <label className="labels">Full Name</label>
+                    <label className="labels">Full Name<span style={{color: 'red'}}>*</span></label> 
                     <input
                       type="text"
                       name='FullName'
@@ -106,7 +107,7 @@ const OrderInformation = ({ total }) => {
                     />
                   </div>
                   <div className="col-md-6">
-                    <label className="labels">Email</label>
+                    <label className="labels">Email<span style={{color: 'red'}}>*</span></label>
                     <input
                       type="email"
                       name='OrderEmail'
@@ -119,7 +120,7 @@ const OrderInformation = ({ total }) => {
                 </div>
                 <div className="row mt-3">
                   <div className="col-md-12">
-                    <label className="labels">Phone Number</label>
+                    <label className="labels">Phone Number<span style={{color: 'red'}}>*</span></label>
                     <input
                       type="text"
                       name='PhoneNumber'
@@ -132,7 +133,7 @@ const OrderInformation = ({ total }) => {
                 </div>
                 <div className="row mt-3">
                   <div className="col-md-12">
-                    <label className="labels">Address</label>
+                    <label className="labels">Address<span style={{color: 'red'}}>*</span></label>
                     <input
                       type="text"
                       name='Address'

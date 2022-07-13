@@ -34,7 +34,7 @@ const ListComment = (props) => {
   const sortedDate = comments.sort((a,b) =>  new Date(b.Problem) - new Date(a.Problem));
   return (
     <>
-      <div className="col-sm-5 col-md-6 col-12 pb-4">
+      <div className="col-sm-12 col-md-6 col-12 col-lg-6 pb-4">
         <h4>{comments.length} Comments</h4>
         {comments.length <= 0 ? (
           <>

@@ -15,6 +15,9 @@ import {
 } from "../redux/shopping-cart-2/shoppingCart";
 import OrderInformation from "../components/OrderInformation";
 
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.min.css';
+
 import { useHistory } from "react-router-dom";
 const Cart = () => {
   const cartItems = useSelector((state) => state.cart.cartItems);
@@ -27,7 +30,7 @@ const Cart = () => {
   };
   var total = 0;
   for (var i = 0; i < cartItems.length; i++) {
-    total += cartItems[i].Price;
+    total += cartItems[i].Price * cartItems[i].qty;
   }
 
   const handleCreateCart = async (id, qty) => {
@@ -40,7 +43,8 @@ const Cart = () => {
           Id: id,
           Image: data.data.Thumbnails.split(",")[0],
           Name: data.data.Name,
-          Price: data.data.Price * parseInt(qty),
+          // Price: data.data.Price * parseInt(qty),
+          Price: data.data.Price,
           qty: parseInt(qty),
         })
       );
@@ -65,8 +69,23 @@ const Cart = () => {
         }
         dispatch(clearOrder());
 
-        window.location.reload();
-        history.push("/catalog");
+       
+        // history.push("/catalog");
+      //  setTimeout(()=>{
+        toast.success("Order Success!!", {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      //  },2500)
+      setTimeout(()=>{
+      window.location.reload();
+    },1000)
+        
       } catch (err) {
         console.log(err);
       }
@@ -74,8 +93,20 @@ const Cart = () => {
   };
 
   return (
-    <Helmet title="Giỏ hàng">
+    <Helmet title="Cart">
       <div className="cart">
+      <ToastContainer
+            position="top-right"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
+          <ToastContainer />
         <div className="cart__info">
           <div className="cart__info__txt">
             <p>
@@ -90,7 +121,7 @@ const Cart = () => {
             {checkOrder ? (
               <Button size="block" onClick={HandlerCreateOrderItem}>
                 {/* {/ <OrderInformation /> /} */}
-                Checkout
+                Order
               </Button>
             ) : cartItems.length > 0 ? (
               <Button size="block">
